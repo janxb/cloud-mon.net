@@ -152,7 +152,7 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_upgrade_time')->limit(10)->get()->map(function($check){
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(10)->get()->map(function($check){
         return  $check->created_at->format('d.m.Y h\:00 a');
        })) !!},
             datasets:
