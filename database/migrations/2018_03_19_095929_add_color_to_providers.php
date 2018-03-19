@@ -13,7 +13,9 @@ class AddColorToProviders extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('providers', function (Blueprint $table) {
+            $table->string('color');
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class AddColorToProviders extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('providers', function (Blueprint $table) {
+            $table->dropColumn('color');
+        });
     }
 }
