@@ -76,7 +76,8 @@
     </div>
     <div class="w-auto text-center bg-white p-3 mt-2" id="test_information">
         <h3>Informations about the monitoring</h3>
-        <p class="pt-2">The server that runs the monitoring is located at the datacenter (Falkenstein) from Hetzner and is an
+        <p class="pt-2">The server that runs the monitoring is located at the datacenter (Falkenstein) from Hetzner and
+            is an
             instance of a
             Hetzner Cloud CX11 Server.</p>
         <p class="pt-2">This test isn't associated with the tested Cloud Providers.</p>
@@ -106,21 +107,31 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(10)->get()->map(function($check){
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->get()->map(function($check){
         return  $check->created_at->format('d.m.Y h\:00 a');
        })) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
+           $data = $provider->checks()->where('check','=','server_creation_time')->limit(24)->get()->map(function($check){
+    return [
+    'x' => $check->created_at->format('d.m.Y H:i:s'),
+    'y' => (float) $check->result
+    ];})->toArray();
+    if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->count()){
+    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->count() - count($data);
+
+    for($i = 0; $i < $diff; $i++){
+        array_unshift($data,[
+            'x' => 0,
+            'y' => 0]);
+        }
+    }
             return [
             'label' => $provider->name,
             'fill' => false,
             'backgroundColor'=> $provider->color,
             'borderColor' => $provider->color,
-            'data' => $provider->checks()->where('check','=','server_creation_time')->limit(24)->get()->map(function($check){
-    return [
-    'x' => $check->created_at->format('d.m.Y H:i:s'),
-    'y' => (float) $check->result
-    ];})
+            'data' => $data
             ];
             })) !!}
         },
@@ -153,21 +164,31 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(10)->get()->map(function($check){
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
         return  $check->created_at->format('d.m.Y h\:00 a');
        })) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
+               $data = $provider->checks()->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
+    return [
+    'x' => $check->created_at->format('d.m.Y H:i:s'),
+    'y' => (float) $check->result
+    ];})->toArray();
+             if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->count()){
+    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->count() - count($data);
+
+    for($i = 0; $i < $diff; $i++){
+        array_unshift($data,[
+            'x' => 0,
+            'y' => 0]);
+        }
+    }
             return [
             'label' => $provider->name,
             'fill' => false,
             'backgroundColor'=> $provider->color,
             'borderColor' => $provider->color,
-            'data' => $provider->checks()->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
-    return [
-    'x' => $check->created_at->format('d.m.Y H:i:s'),
-    'y' => (float) $check->result
-    ];})
+            'data' => $data
             ];
             })) !!}
         },
