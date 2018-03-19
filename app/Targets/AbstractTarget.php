@@ -35,4 +35,9 @@ abstract class AbstractTarget
      */
     public abstract function checkServerCreationTime();
 
+    /**
+     * @return \App\Models\Check
+     */
+    public abstract function checkServerUpgradeTime();
+
 }
