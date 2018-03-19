@@ -77,6 +77,9 @@
                 }],
                 xAxes: [{
                     display: true,
+                    ticks: {
+                        beginAtZero: false
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Time on the Clock'
@@ -121,6 +124,9 @@
                 }],
                 xAxes: [{
                     display: true,
+                    ticks: {
+                        beginAtZero: false
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Time on the Clock'
