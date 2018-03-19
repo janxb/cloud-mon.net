@@ -14,9 +14,9 @@
     <!-- Styles -->
 
 </head>
-<body>
+<body class="bg-grey-lighter">
 <div class="container mx-auto">
-    <div class="w-auto h-100">
+    <div class="w-auto h-100 text-center">
         <h3>Time between API Call and first Ping (in seconds last 24 hours)</h3>
         <canvas id="hetzner_cloud_server_creation_time"></canvas>
     </div>
