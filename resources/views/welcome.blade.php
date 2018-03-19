@@ -27,9 +27,9 @@
   </span>
 </div>
     </span>
-    <div class="w-auto text-center bg-white">
+    <div class="w-auto text-center bg-white p-3">
         <h3>Welcome!</h3>
-        <p>This is just a little monitoring for some cloud providers. We check every provider once a hour and display the results here. Since a valid monitoring can only be trusted when the source code is open, here is the source available on <a href="https://github.com/LKDevelopment/cloud-mon.net">Github.</p>
+        <p class="pt-2">This is just a little monitoring for some cloud providers. We check every provider once a hour and display the results here. Since a valid monitoring can only be trusted when the source code is open, here is the source available on <a href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a></p>
     </div>
     <div class="w-auto h-100 text-center">
         <h3>Response Time of the servers list endpoint</h3>
