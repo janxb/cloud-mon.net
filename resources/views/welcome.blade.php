@@ -89,6 +89,8 @@
         <p class="pt-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the cx11.</p>
         <h5>DigitalOcean</h5>
         <p class="pt-2">On DigitalOcean we use the smallest available server, the s-1vcpu-1gb.</p>
+        <h5>Linode</h5>
+        <p class="pt-2">On Linode we use the smallest available server, the Linode 1024.</p>
     </div>
     <div class="w-auto text-center p-3 mt-2 text-grey-darker">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i
@@ -97,8 +99,7 @@
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
                       fill="#52C0B5"/>
-            </svg>
-        </a> in {{ date('Y') }} by <a
+            </svg></a> in {{ date('Y') }} by <a
                 href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
