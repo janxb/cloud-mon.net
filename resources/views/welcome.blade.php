@@ -12,7 +12,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
     <!-- Styles -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
+            integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
+            crossorigin="anonymous"></script>
 </head>
 <body class="bg-grey-lighter">
 <div class="container mx-auto">
@@ -91,8 +93,13 @@
         <p class="pt-2">On DigitalOcean we use the smallest available server, the s-1vcpu-1gb.</p>
     </div>
     <div class="w-auto text-center p-3 mt-2 text-grey-darker">
-        Crafted with <i class="fas fa-heart text-red"></i> & <a href="https://laravel.com" target="_blank"><i class="fab fa-laravel"></i></a> in {{ date('Y') }} by <a
-                href="https://lukas-kaemmerling.de"  target="_blank">Lukas Kämmerling</a>
+        Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i
+                    class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com">
+            <svg class="fill-current h-4 w-4 mr-2" width="54" height="54" viewBox="0 0 54 54"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" fill="#52C0B5"/>
+            </svg></a> in {{ date('Y') }} by <a
+                href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
 <script>
