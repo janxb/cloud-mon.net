@@ -39,7 +39,10 @@
                    class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
                     Server Creation
                 </a>
-
+                <a href="#test_information"
+                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                    Test Information
+                </a>
             </div>
         </div>
         <div>
@@ -65,13 +68,27 @@
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
             here is the source available on <a href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a></p>
     </div>
-    <div class="w-auto h-100 text-center">
+    <div class="w-auto h-100 text-center p-2 mt-2">
         <h3 class="p-2">Response Time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
     </div>
-    <div class="w-auto h-100 text-center">
+    <div class="w-auto h-100 text-center p-2 mt-2">
         <h3 class="p-2">Time between API Call and first Ping (in seconds last 24 hours)</h3>
         <canvas id="server_creation_time"></canvas>
+    </div>
+    <div class="w-auto text-center bg-white p-3 mt-2" id="test_information">
+        <h3>Informations about the monitoring</h3>
+        <p class="pt-2">The server that runs the monitoring stand at the datacenter from Hetzner and is an instance of a
+            Hetzner Cloud CX11 Server.</p>
+        <p class="pt-2">This test isn't associated with the tested Cloud Providers.</p>
+        <h4>Instanced Definition</h4>
+        <p class="pt-2">We start all servers with the default ubuntu 16.04 image from the provider. Since actually we
+            doesn't test the performance of the servers we used the cheapest available servers and only test the
+            performance of the api or there provision system.</p>
+        <h5>Hetzner Cloud</h5>
+        <p class="pt-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the cx11.</p>
+        <h5>DigitalOcean</h5>
+        <p class="pt-2">On DigitalOcean we use the smallest available server, the s-1vcpu-1gb.</p>
     </div>
 </div>
 <script>
