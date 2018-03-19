@@ -81,9 +81,9 @@
             Hetzner Cloud CX11 Server.</p>
         <p class="pt-2">This test isn't associated with the tested Cloud Providers.</p>
         <h4>Instanced Definition</h4>
-        <p class="pt-2">We start all servers with the default ubuntu 16.04 image from the provider. Since actually we
-            doesn't test the performance of the servers we used the cheapest available servers and only test the
-            performance of the api or there provision system.</p>
+        <p class="pt-2">We start all servers with the default ubuntu 16.04 image from the provider. Actually we
+            doesn't test the performance of the servers, so we used the cheapest available servers.</p>
+        <p class="pt-2">We test only the performance of the api and the provision system.</p>
         <h5>Hetzner Cloud</h5>
         <p class="pt-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the cx11.</p>
         <h5>DigitalOcean</h5>
