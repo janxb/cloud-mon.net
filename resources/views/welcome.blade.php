@@ -12,7 +12,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
     <!-- Styles -->
-
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"
+            integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js"
+            integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+            crossorigin="anonymous"></script>
 </head>
 <body class="bg-grey-lighter">
 <div class="container mx-auto">
@@ -89,6 +94,10 @@
         <p class="pt-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the cx11.</p>
         <h5>DigitalOcean</h5>
         <p class="pt-2">On DigitalOcean we use the smallest available server, the s-1vcpu-1gb.</p>
+    </div>
+    <div class="w-auto text-center p-3 mt-2 text-grey-darker">
+        Crafted with <i class="fas fa-heart text-red"></i> & <i class="fab fa-laravel"></i> in {{ date('Y') }} by <a
+                href="https://lukas-kaemmerling.de">Lukas Kämmerling</a>
     </div>
 </div>
 <script>
