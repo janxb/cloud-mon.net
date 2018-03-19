@@ -1,4 +1,4 @@
-## cloud-mon.net
+## [cloud-mon.net](https://cloud-mon.net)
 A little cloud monitoring service that monitors some cloud provider.
 Actually we monitor the following cloud provider:
 * [Hetzner Cloud](https://hetzner.cloud)
