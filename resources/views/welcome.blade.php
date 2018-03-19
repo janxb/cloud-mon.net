@@ -20,6 +20,10 @@
         <h3>Time between API Call and first Ping (in seconds last 24 hours)</h3>
         <canvas id="hetzner_cloud_server_creation_time"></canvas>
     </div>
+    <div class="w-auto h-100 text-center">
+        <h3>Time between API Call and first Ping (in seconds last 24 hours)</h3>
+        <canvas id="hetzner_cloud_server_upgrade_time"></canvas>
+    </div>
 </div>
 <script>
     var ctx = document.getElementById("hetzner_cloud_server_creation_time");
@@ -66,7 +70,50 @@
             }
         }
     });
-
+    var ctx = document.getElementById("hetzner_cloud_server_upgrade_time");
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_upgrade_time')->limit(10)->get()->map(function($check){
+        return  $check->created_at->format('d.m.Y h\:00 a');
+       })) !!},
+            datasets:
+            {!! json_encode(\App\Models\Provider::all()->map(function($provider){
+            return [
+            'label' => $provider->name,
+            'fill' => false,
+            'backgroundColor'=> $provider->color,
+            'borderColor' => $provider->color,
+            'data' => $provider->checks()->where('check','=','server_upgrade_time')->limit(24)->get()->map(function($check){
+    return [
+    'x' => $check->created_at->format('d.m.Y H:i:s'),
+    'y' => (float) $check->result
+    ];})
+            ];
+            })) !!}
+        },
+        options: {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Seconds'
+                    }
+                }],
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time on the Clock'
+                    }
+                }],
+            }
+        }
+    });
 </script>
 </body>
 </html>
