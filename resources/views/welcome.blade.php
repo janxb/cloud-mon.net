@@ -24,9 +24,9 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->get()->map(function($check){
+            labels:{!! json_encode(\App\Models\Provider::first()->checks()->where('check','=','server_creation_time')->limit(10)->orderBy('id','DESC')->get()->map(function($check){
         return  $check->created_at->format('d.m.Y H');
-       })) !!},
+       }))->sort() !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
             return [
@@ -34,11 +34,11 @@
             'fill' => false,
             'backgroundColor'=> $provider->color,
             'borderColor' => $provider->color,
-            'data' => $provider->checks()->where('check','=','server_creation_time')->get()->map(function($check){
+            'data' => $provider->checks()->where('check','=','server_creation_time')->limit(10)->orderBy('id','DESC')->get()->map(function($check){
     return [
     'x' => $check->created_at->format('d.m.Y H'),
     'y' => (float) $check->result
-    ];})
+    ];})->sortBy('x')
             ];
             })) !!}
         },
