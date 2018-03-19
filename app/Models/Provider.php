@@ -17,7 +17,7 @@ class Provider extends Model
         'name',
         'target',
         'credentials',
-        'specs',
+        'color',
     ];
 
     /**
