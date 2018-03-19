@@ -91,8 +91,8 @@
         <p class="pt-2">On DigitalOcean we use the smallest available server, the s-1vcpu-1gb.</p>
     </div>
     <div class="w-auto text-center p-3 mt-2 text-grey-darker">
-        Crafted with <i class="fas fa-heart text-red"></i> & <i class="fab fa-laravel"></i> in {{ date('Y') }} by <a
-                href="https://lukas-kaemmerling.de">Lukas Kämmerling</a>
+        Crafted with <i class="fas fa-heart text-red"></i> & <a href="https://laravel.com" target="_blank"><i class="fab fa-laravel"></i></a> in {{ date('Y') }} by <a
+                href="https://lukas-kaemmerling.de"  target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
 <script>
