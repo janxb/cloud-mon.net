@@ -10,13 +10,15 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
     <!-- Styles -->
 
 </head>
 <body>
-<div class="flex-center position-ref full-height">
-    <div class="content" style="width:40%">
-        <canvas id="hetzner_cloud_server_creation_time" width="100" height="100"></canvas>
+<div class="container mx-auto">
+    <div class="w-auto h-100">
+        <h3>Time between API Call and first Ping (in seconds)</h3>
+        <canvas id="hetzner_cloud_server_creation_time"></canvas>
     </div>
 </div>
 <script>
