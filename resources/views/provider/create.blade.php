@@ -19,6 +19,10 @@
                                 <input type="text" class="form-control" name="target" value="HetznerTarget">
                             </div>
                             <div class="form-group">
+                                <label>Color</label>
+                                <input type="text" class="form-control" name="color" value="#ff0000">
+                            </div>
+                            <div class="form-group">
                                 <label for="api_key">Api Key</label>
                                 <input type="password" class="form-control" name="api_key"
                                        placeholder="Password">

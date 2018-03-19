@@ -32,8 +32,8 @@
             return [
             'label' => $provider->name,
             'fill' => false,
-            'backgroundColor'=>'#ff0000',
-            'borderColor' => '#ff0000',
+            'backgroundColor'=> $provider->color,
+            'borderColor' => $provider->color,
             'data' => $provider->checks()->where('check','=','server_creation_time')->get()->map(function($check){
     return [
     'x' => $check->created_at->format('H:i:s'),

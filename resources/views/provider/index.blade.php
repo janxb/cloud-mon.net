@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">@
+                <div class="card">
                     <div class="card-header">Provider</div>
 
                     <div class="card-body">
@@ -18,7 +18,7 @@
                             @foreach(\App\Models\Provider::all() as $provider)
                                 <tr>
                                     <td>{{ $provider->name }}</td>
-                                    <td>Bearbeiten</td>
+                                    <td><a href="{{ route('provider.edit',$provider) }}">Bearbeiten</a></td>
                                 </tr>
                             @endforeach
                             </tbody>

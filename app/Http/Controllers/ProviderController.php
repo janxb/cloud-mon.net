@@ -36,11 +36,12 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->only(['name', 'target', 'api_key']);
+        $data = $request->only(['name', 'target', 'api_key', 'color']);
         $payload = [
             'name' => $data['name'],
             'target' => $data['target'],
             'credentials' => Crypt::encrypt(json_encode(['api_key' => $data['api_key']])),
+            'color' => $data['color'],
         ];
         Provider::create($payload);
 
@@ -64,9 +65,9 @@ class ProviderController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Provider $provider)
     {
-        //
+        return view('provider.edit', compact('provider'));
     }
 
     /**
@@ -76,9 +77,18 @@ class ProviderController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Provider $provider)
     {
-        //
+        $data = $request->only(['name', 'target', 'api_key', 'color']);
+        $payload = [
+            'name' => $data['name'],
+            'target' => $data['target'],
+
+            'color' => $data['color'],
+        ];
+        $provider->update($payload);
+
+        return redirect()->route('provider.index');
     }
 
     /**
