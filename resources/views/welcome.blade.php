@@ -53,17 +53,13 @@
         </div>
     </nav>
 
-    <span class="text-center w-auto">
-        <div class="bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative" role="alert">
-  <strong class="font-bold">Attention!</strong>
-  <span class="block sm:inline">This monitoring is still work in progress and hasn't enough data to be valid!</span>
-  <span class="absolute pin-t pin-b pin-r px-4 py-3">
-    <svg class="fill-current h-6 w-6 text-red" role="button" xmlns="http://www.w3.org/2000/svg"
-         viewBox="0 0 20 20"><title>Close</title><path
-                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-  </span>
-</div>
-    </span>
+    <div class="text-center w-auto">
+        <div class="bg-orange-lightest border border-orange-light text-orange-dark px-4 py-3 rounded relative"
+             role="alert">
+            <strong class="font-bold">Warning!</strong>
+            <span class="block sm:inline">This monitoring is still work in progress and hasn't enough data to be valid!</span>
+        </div>
+    </div>
     <div class="w-auto text-center bg-white p-3 mt-2">
         <h3>Welcome!</h3>
         <p class="pt-2">This is just a little monitoring for some cloud providers. We check every provider once a hour
@@ -97,8 +93,10 @@
                     class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com">
             <svg class="fill-current h-4 w-4 mr-2" width="54" height="54" viewBox="0 0 54 54"
                  xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" fill="#52C0B5"/>
-            </svg></a> in {{ date('Y') }} by <a
+                <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
+                      fill="#52C0B5"/>
+            </svg>
+        </a> in {{ date('Y') }} by <a
                 href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
