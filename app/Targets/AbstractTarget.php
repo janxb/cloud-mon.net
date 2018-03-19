@@ -38,6 +38,6 @@ abstract class AbstractTarget
     /**
      * @return \App\Models\Check
      */
-    public abstract function checkServerUpgradeTime();
+    public abstract function checkApiResponseTime();
 
 }
