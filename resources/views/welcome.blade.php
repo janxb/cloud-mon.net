@@ -25,7 +25,7 @@
         type: 'line',
         data: {
             labels:{!! json_encode(\App\Models\Provider::first()->checks()->where('check','=','server_creation_time')->limit(10)->orderBy('id','DESC')->get()->map(function($check){
-        return  $check->created_at->format('d.m.Y H');
+        return  $check->created_at->format('d.m.Y H:m');
        })) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
@@ -36,7 +36,7 @@
             'borderColor' => $provider->color,
             'data' => $provider->checks()->where('check','=','server_creation_time')->limit(10)->orderBy('id','DESC')->get()->map(function($check){
     return [
-    'x' => $check->created_at->format('d.m.Y H'),
+    'x' => $check->created_at->format('d.m.Y H:m'),
     'y' => (float) $check->result
     ];})
             ];
