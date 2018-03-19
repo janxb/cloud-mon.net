@@ -27,17 +27,21 @@
   </span>
 </div>
     </span>
+    <div class="w-auto text-center bg-white">
+        <h3>Welcome!</h3>
+        <p>This is just a little monitoring for some cloud providers. We check every provider once a hour and display the results here. Since a valid monitoring can only be trusted when the source code is open, here is the source: </p>
+    </div>
     <div class="w-auto h-100 text-center">
-        <h3>Response Time of the Servers List API Endpoint</h3>
-        <canvas id="hetzner_cloud_api_response_time"></canvas>
+        <h3>Response Time of the servers list endpoint</h3>
+        <canvas id="api_response_time"></canvas>
     </div>
     <div class="w-auto h-100 text-center">
         <h3>Time between API Call and first Ping (in seconds last 24 hours)</h3>
-        <canvas id="hetzner_cloud_server_creation_time"></canvas>
+        <canvas id="server_creation_time"></canvas>
     </div>
 </div>
 <script>
-    var ctx = document.getElementById("hetzner_cloud_server_creation_time");
+    var ctx = document.getElementById("server_creation_time");
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -81,7 +85,7 @@
             }
         }
     });
-    var ctx = document.getElementById("hetzner_cloud_api_response_time");
+    var ctx = document.getElementById("api_response_time");
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
