@@ -38,7 +38,7 @@
             'borderColor' => $provider->color,
             'data' => $provider->checks()->where('check','=','server_creation_time')->limit(24)->get()->map(function($check){
     return [
-    'x' => $check->created_at->format('d.m.Y H'),
+    'x' => $check->created_at->format('d.m.Y H:i:s'),
     'y' => (float) $check->result
     ];})
             ];
