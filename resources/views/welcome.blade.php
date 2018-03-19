@@ -64,19 +64,20 @@
         <h3>Welcome!</h3>
         <p class="pt-2">This is just a little monitoring for some cloud providers. We check every provider once a hour
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
-            here is the source available on <a href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a></p>
+            the source available on <a href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a></p>
     </div>
     <div class="w-auto h-100 text-center p-2 mt-2">
-        <h3 class="p-2">Response Time of the servers list endpoint</h3>
+        <h3 class="p-2">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
     </div>
     <div class="w-auto h-100 text-center p-2 mt-2">
-        <h3 class="p-2">Time between API Call and first Ping (in seconds last 24 hours)</h3>
+        <h3 class="p-2">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
         <canvas id="server_creation_time"></canvas>
     </div>
     <div class="w-auto text-center bg-white p-3 mt-2" id="test_information">
         <h3>Informations about the monitoring</h3>
-        <p class="pt-2">The server that runs the monitoring stand at the datacenter (Falkenstein) from Hetzner and is an instance of a
+        <p class="pt-2">The server that runs the monitoring stand at the datacenter (Falkenstein) from Hetzner and is an
+            instance of a
             Hetzner Cloud CX11 Server.</p>
         <p class="pt-2">This test isn't associated with the tested Cloud Providers.</p>
         <h4>Instanced Definition</h4>
