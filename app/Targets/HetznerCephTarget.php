@@ -20,7 +20,7 @@ use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
 /**
  *
  */
-class HetznerCephTarget extends AbstractTarget
+class HetznerCephTarget extends HetznerTarget
 {
     /**
      * @var \LKDev\HetznerCloud\HetznerAPIClient
@@ -69,14 +69,5 @@ class HetznerCephTarget extends AbstractTarget
         $created_server->delete();
 
         return $check;
-    }
-
-    /**
-     * @return \App\Models\Check|\Illuminate\Database\Eloquent\Model
-     * @throws \LKDev\HetznerCloud\APIException
-     */
-    public function checkApiResponseTime()
-    {
-        return;
     }
 }
