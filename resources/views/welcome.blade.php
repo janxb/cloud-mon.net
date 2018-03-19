@@ -76,7 +76,7 @@
     </div>
     <div class="w-auto text-center bg-white p-3 mt-2" id="test_information">
         <h3>Informations about the monitoring</h3>
-        <p class="pt-2">The server that runs the monitoring stand at the datacenter (Falkenstein) from Hetzner and is an
+        <p class="pt-2">The server that runs the monitoring is located at the datacenter (Falkenstein) from Hetzner and is an
             instance of a
             Hetzner Cloud CX11 Server.</p>
         <p class="pt-2">This test isn't associated with the tested Cloud Providers.</p>
