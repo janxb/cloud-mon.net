@@ -25,7 +25,7 @@
         type: 'line',
         data: {
             labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->get()->map(function($check){
-        return  $check->created_at->format('H:i:s');
+        return  $check->created_at->format('d.m.Y H');
        })) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
@@ -36,7 +36,7 @@
             'borderColor' => $provider->color,
             'data' => $provider->checks()->where('check','=','server_creation_time')->get()->map(function($check){
     return [
-    'x' => $check->created_at->format('H:i:s'),
+    'x' => $check->created_at->format('d.m.Y H'),
     'y' => (float) $check->result
     ];})
             ];
@@ -48,13 +48,17 @@
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Seconds'
                     }
                 }],
                 xAxes: [{
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Time'
+                        labelString: 'Time on the Clock'
                     }
                 }],
             }
