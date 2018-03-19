@@ -50,7 +50,7 @@ class HetznerTarget extends AbstractTarget
         $location = $locations->get(1);
         $ssh_keys = new SSHKeys();
 
-        $created_server = $server->create('mon-cloud-test-hetzner.mon-cloud.net', $serverType, $image, $location, null, [$ssh_keys->get(18802)]);
+        $created_server = $server->create('mon-cloud-test-hetzner.mon-cloud.net', $serverType, $image, $location, null, [18802]);
         $start = microtime(true);
         $ping = new Ping($created_server->publicNet->ipv4->ip, 255, 5);
         $trys = 100;
