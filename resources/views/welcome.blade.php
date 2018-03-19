@@ -24,7 +24,7 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::first()->checks()->where('check','=','server_creation_time')->limit(10)->orderBy('id','DESC')->get()->map(function($check){
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(10)->orderBy('id','DESC')->get()->map(function($check){
         return  $check->created_at->format('d.m.Y H:m');
        })) !!},
             datasets:
