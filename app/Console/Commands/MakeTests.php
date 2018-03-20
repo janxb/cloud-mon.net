@@ -38,8 +38,8 @@ class MakeTests extends Command
      */
     public function handle()
     {
-        //$providers = Provider::all();
-        $providers = Provider::where('id','=','4')->get();
+        $providers = Provider::all();
+        //$providers = Provider::where('id','=','4')->get();
         $this->info(count($providers).' Provider');
         foreach ($providers as $provider) {
             $this->info($provider);
