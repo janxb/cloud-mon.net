@@ -87,4 +87,15 @@ class DigitalOceanTarget extends AbstractTarget
 
         $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
     }
+
+    /**
+     *
+     */
+    public function terminateAllServers()
+    {
+        $droplets = $this->digitalOcean->droplet()->getAll();
+        foreach ($droplets as $droplet){
+            $this->digitalOcean->droplet()->delete($droplet->id);
+        }
+    }
 }

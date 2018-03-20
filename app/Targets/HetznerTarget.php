@@ -85,4 +85,21 @@ class HetznerTarget extends AbstractTarget
 
         $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
     }
+
+    /**
+     * @throws \LKDev\HetznerCloud\APIException
+     */
+    public function terminateAllServers()
+    {
+        $servers = new Servers();
+        $servers = $servers->all();
+        foreach ($servers as $server) {
+            /**
+             * @var $server \LKDev\HetznerCloud\Models\Servers\Server
+             */
+            if ($server->name != 'cloud-mon.net') {
+                $server->delete();
+            }
+        }
+    }
 }

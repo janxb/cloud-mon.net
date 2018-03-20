@@ -22,16 +22,17 @@ use LKDev\HetznerCloud\Models\Locations\Locations;
 use LKDev\HetznerCloud\Models\Servers\Servers;
 use LKDev\HetznerCloud\Models\Servers\Types\ServerTypes;
 use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
+use Vultr\VultrClient;
 
 /**
  *
  */
-class LinodeTarget extends AbstractTarget
+class VultrTarget extends AbstractTarget
 {
     /**
-     * @var \Linode\LinodeApi
+     * @var \Vultr\VultrClient
      */
-    protected $linode;
+    protected $vultr;
 
     /**
      * HetznerTarget constructor.
@@ -41,7 +42,7 @@ class LinodeTarget extends AbstractTarget
     public function __construct(Provider $provider)
     {
         parent::__construct($provider);
-        $this->linode = new LinodeApi($provider->getCredentials()->api_key);
+        $this->vultr = new VultrClient(new \Vultr\Adapter\GuzzleHttpAdapter($provider->getCredentials()->api_key));
     }
 
     /**
@@ -51,32 +52,20 @@ class LinodeTarget extends AbstractTarget
     public function checkServerCreationTime()
     {
         // return the key api
-        $created_server = $this->linode->create(10, 1);
+        $created_server_id = $this->vultr->server()->create([
+            'DCID' => 9,
+            'VPSPLANID' => 201,
+            'OSID' => 215,
+        ]);
 
-        $created_server_id = $created_server['LinodeID'];
         $start = microtime(true);
-        $created_server = $this->linode->getList($created_server_id);
-        while ($created_server[0]['STATUS'] != 0) {
+        $created_server = $this->vultr->server()->getList($created_server_id);
+        while ($created_server['server_state'] != 'ok') {
             echo "Next try if it is 'brand new'".PHP_EOL;
-            $created_server = $this->linode->getList($created_server_id);
-            sleep(0.4);
+            $created_server = $this->vultr->server()->getList($created_server_id);
+            sleep(2);
         }
-        $disk = new DiskApi($this->provider->getCredentials()->api_key);
-        $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon', 1024, str_random());
-        $created_disk_id = $created_disk['DiskID'];
-        $config = new ConfigApi($this->provider->getCredentials()->api_key);
-        $created_config = $config->create($created_server_id, 'cloud-mon', 138, $created_disk_id);
-        $created_config_id = $created_config['ConfigID'];
-        $this->linode->boot($created_server_id, $created_config_id);
-        $ip_api = new IpApi($this->provider->getCredentials()->api_key);
-        $ip = $ip_api->getList($created_server_id);
-        $created_server = $this->linode->getList($created_server_id);
-        while ($created_server[0]['STATUS'] != 1) {
-            echo "Next Try if it comes online".PHP_EOL;
-            $created_server = $this->linode->getList($created_server_id);
-            sleep(1);
-        }
-        $ping = new Ping($ip[0]['IPADDRESS'], 255, 5);
+        $ping = new Ping($created_server['main_ip'], 255, 5);
         $trys = 100;
         while ($ping->ping() == false && $trys != 0) {
             echo $trys;
@@ -87,7 +76,7 @@ class LinodeTarget extends AbstractTarget
         $duration = $end - $start;
 
         $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-        $this->linode->delete($created_server_id, true);
+        $this->vultr->server()->destroy($created_server_id);
 
         return $check;
     }
@@ -99,21 +88,18 @@ class LinodeTarget extends AbstractTarget
     public function checkApiResponseTime()
     {
         $start = microtime(true);
-        $this->linode->getList();
+        $this->vultr->server()->getList();
         $end = microtime(true);
         $duration = $end - $start;
 
         $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
     }
 
-    /**
-     *
-     */
     public function terminateAllServers()
     {
-        $linodes = $this->linode->getList();
-        foreach ($linodes as $linode) {
-            $this->linode->delete($linode['LINODEID'], true);
+        $servers = $this->vultr->server()->getList();
+        foreach ($servers as $server) {
+            var_dump($this->vultr->server()->destroy($server['SUBID']));
         }
     }
 }

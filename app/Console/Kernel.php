@@ -24,8 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('make:tests')
+         $schedule->command('check:tests')
                   ->hourly();
+        $schedule->command('check:terminateAllServers')
+            ->hourlyAt(10);
     }
 
     /**

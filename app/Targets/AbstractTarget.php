@@ -40,4 +40,8 @@ abstract class AbstractTarget
      */
     public abstract function checkApiResponseTime();
 
+    /**
+     * @return void
+     */
+    public abstract function terminateAllServers();
 }

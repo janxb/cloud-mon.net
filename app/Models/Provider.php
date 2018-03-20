@@ -36,14 +36,23 @@ class Provider extends Model
         return json_decode(Crypt::decrypt($this->credentials));
     }
 
-    public function fireChecks()
+    /**
+     * @return \App\Targets\AbstractTarget
+     */
+    public function getTarget()
     {
         $class = 'App\\Targets\\'.$this->target;
-        $reflection = new \ReflectionClass($class);
+
+        return $target = new $class($this);
+    }
+
+    public function fireChecks()
+    {
+        $target = $this->getTarget();
+        $reflection = new \ReflectionClass(get_class($target));
         $methods = $reflection->getMethods();
-        $target = new $class($this);
+
         foreach ($methods as $method) {
-            var_dump($method->name);
             if (starts_with($method->name, 'check')) {
                 call_user_func([$target, $method->name]);
             }
