@@ -53,7 +53,7 @@ class VultrTarget extends AbstractTarget
     {
         // return the key api
         $created_server_id = $this->vultr->server()->create([
-            'DCID' => 9,
+            'DCID' => 24,
             'VPSPLANID' => 201,
             'OSID' => 215,
         ]);
