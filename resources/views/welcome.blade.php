@@ -99,7 +99,8 @@
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
                       fill="#52C0B5"/>
-            </svg></a> in {{ date('Y') }} by <a
+            </svg>
+        </a> in {{ date('Y') }} by <a
                 href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
@@ -108,9 +109,17 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(12)->orderBy('id','DESC')->get()->map(function($check){
-        return  $check->created_at->format('d.m.Y h\:00 a');
-       })) !!},
+            <?php
+                $labels = \App\Models\Provider::find(1)->checks()->where('check', '=', 'server_creation_time')->limit(12)->orderBy('id', 'DESC')->get()->map(function (
+                    $check
+                ) {
+                    return $check->created_at->format('d.m.Y h\:00 a');
+                })->toArray();
+                rsort($labels);
+
+
+                ?>
+            labels:{!! json_encode($labels) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
            $data = $provider->checks()->where('check','=','server_creation_time')->limit(12)->orderBy('id','DESC')->get()->map(function($check){
@@ -122,11 +131,12 @@
     $diff = \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(12)->orderBy('id','DESC')->count() - count($data);
 
     for($i = 0; $i < $diff; $i++){
-        array_push($data,[
+        array_unshift($data,[
             'x' => 0,
             'y' => 0]);
         }
     }
+    rsort($data);
             return [
             'label' => $provider->name,
             'fill' => false,
@@ -165,9 +175,17 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(12)->orderBy('id','DESC')->get()->map(function($check){
-        return  $check->created_at->format('d.m.Y h\:00 a');
-       })) !!},
+            <?php
+                $labels = \App\Models\Provider::find(1)->checks()->where('check', '=', 'api_response_time')->limit(12)->orderBy('id', 'DESC')->get()->map(function (
+                    $check
+                ) {
+                    return $check->created_at->format('d.m.Y h\:00 a');
+                })->toArray();
+                rsort($labels);
+
+
+                ?>
+            labels:{!! json_encode($labels) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
                $data = $provider->checks()->where('check','=','api_response_time')->limit(12)->orderBy('id','DESC')->get()->map(function($check){
@@ -184,6 +202,7 @@
             'y' => 0]);
         }
     }
+        rsort($data);
             return [
             'label' => $provider->name,
             'fill' => false,
