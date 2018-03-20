@@ -22,6 +22,7 @@ use LKDev\HetznerCloud\Models\Locations\Locations;
 use LKDev\HetznerCloud\Models\Servers\Servers;
 use LKDev\HetznerCloud\Models\Servers\Types\ServerTypes;
 use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
+use Vultr\Exception\ApiException;
 use Vultr\VultrClient;
 
 /**
@@ -51,34 +52,61 @@ class VultrTarget extends AbstractTarget
      */
     public function checkServerCreationTime()
     {
-        // return the key api
-        $created_server_id = $this->vultr->server()->create([
-            'DCID' => 12,
-            'VPSPLANID' => 201,
-            'OSID' => 215,
-        ]);
+        $regions = $this->vultr->region()->getList();
+        $data = [];
+        $plans = [200, 201];
+        foreach ($plans as $plan) {
+            if (empty($data)) {
+                foreach ($regions as $region) {
+                    try {
+                        // check if smartest server is available
+                        if ($this->vultr->server()->isAvailable($region['DCID'], $plan)) {
+                            $data = [
+                                'DCID' => $region['DCID'],
+                                'VPSPLANID' => $plan,
+                                'OSID' => 215,
+                            ];
+                            echo "Plan $plan exist on ".$region['name'].PHP_EOL;
+                            break;
+                        }
+                    } catch (ApiException $apiException) {
 
-        $start = microtime(true);
-        $created_server = $this->vultr->server()->getList($created_server_id);
-        while ($created_server['server_state'] != 'ok') {
-            echo "Next try if it is 'brand new'".PHP_EOL;
+                    }
+                    sleep(1);
+                    echo "Plan $plan doesn't exist on ".$region['name'].PHP_EOL;
+                }
+            } else {
+                break;
+            }
+        }
+        if (! empty($data)) {
+            // return the key api
+            $created_server_id = $this->vultr->server()->create($data);
+
+            $start = microtime(true);
             $created_server = $this->vultr->server()->getList($created_server_id);
-            sleep(2);
+            echo "Created Server: ".$created_server['main_ip'].PHP_EOL;
+            while ($created_server['server_state'] != 'ok') {
+                echo "Server State isn't okay".PHP_EOL;
+                $created_server = $this->vultr->server()->getList($created_server_id);
+                sleep(2);
+            }
+            $ping = new Ping($created_server['main_ip'], 255, 5);
+            $trys = 100;
+            while ($ping->ping() == false && $trys != 0) {
+                echo $trys;
+                $trys--;
+            }
+            $end = microtime(true);
+
+            $duration = $end - $start;
+
+            $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
+            $this->vultr->server()->destroy($created_server_id);
+
+            return $check;
         }
-        $ping = new Ping($created_server['main_ip'], 255, 5);
-        $trys = 100;
-        while ($ping->ping() == false && $trys != 0) {
-            echo $trys;
-            $trys--;
-        }
-        $end = microtime(true);
 
-        $duration = $end - $start;
-
-        $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-        $this->vultr->server()->destroy($created_server_id);
-
-        return $check;
     }
 
     /**
