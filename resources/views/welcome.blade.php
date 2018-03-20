@@ -122,7 +122,7 @@
     $diff = \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(12)->orderBy('id','DESC')->count() - count($data);
 
     for($i = 0; $i < $diff; $i++){
-        array_unshift($data,[
+        array_push($data,[
             'x' => 0,
             'y' => 0]);
         }
@@ -179,7 +179,7 @@
     $diff = \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(12)->orderBy('id','DESC')->count() - count($data);
 
     for($i = 0; $i < $diff; $i++){
-        array_unshift($data,[
+        array_push($data,[
             'x' => 0,
             'y' => 0]);
         }
