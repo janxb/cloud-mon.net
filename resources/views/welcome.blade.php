@@ -115,7 +115,7 @@
                 ) {
                     return $check->created_at->format('d.m.Y h\:00 a');
                 })->toArray();
-                rsort($labels);
+                krsort($labels);
 
 
                 ?>
@@ -136,7 +136,7 @@
             'y' => 0]);
         }
     }
-    rsort($data);
+    krsort($data);
             return [
             'label' => $provider->name,
             'fill' => false,
@@ -181,7 +181,7 @@
                 ) {
                     return $check->created_at->format('d.m.Y h\:00 a');
                 })->toArray();
-                rsort($labels);
+                krsort($labels);
 
 
                 ?>
@@ -202,7 +202,7 @@
             'y' => 0]);
         }
     }
-        rsort($data);
+        krsort($data);
             return [
             'label' => $provider->name,
             'fill' => false,
