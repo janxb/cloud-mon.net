@@ -12,7 +12,7 @@ class MakeTests extends Command
      *
      * @var string
      */
-    protected $signature = 'check:tests';
+    protected $signature = 'check:tests {provider?}';
 
     /**
      * The console command description.
@@ -38,8 +38,12 @@ class MakeTests extends Command
      */
     public function handle()
     {
-        $providers = Provider::all();
-        //$providers = Provider::where('id','=','4')->get();
+        if ($this->argument('provider') == null) {
+            $providers = Provider::all();
+        } else {
+            $providers = Provider::where('id', '=', $this->argument('provider'))->get();
+        }
+
         $this->info(count($providers).' Provider');
         foreach ($providers as $provider) {
             $this->info($provider);

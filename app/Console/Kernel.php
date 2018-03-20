@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Provider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,22 +13,22 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-        //
+    protected $commands = [//
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('check:tests')
-                  ->hourly();
-        $schedule->command('check:terminateAllServers')
-            ->hourlyAt(10);
+        foreach (Provider::all() as $provider) {
+            $schedule->command('check:tests', ['provider' => $provider->id])->hourly();
+        }
+
+        $schedule->command('check:terminateAllServers')->hourlyAt(10);
     }
 
     /**
