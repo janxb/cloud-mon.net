@@ -24,9 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        foreach (Provider::all() as $provider) {
-            $schedule->command('check:tests', ['provider' => $provider->id])->hourly();
-        }
+
+        $schedule->command('check:tests')->hourly();
 
         $schedule->command('check:terminateAllServers')->hourlyAt(10);
     }
