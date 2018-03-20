@@ -71,7 +71,7 @@
         <canvas id="api_response_time"></canvas>
     </div>
     <div class="w-auto h-100 text-center p-2 mt-2">
-        <h3 class="p-2">Time between api call and first successfully ping (in seconds last 12 hours)</h3>
+        <h3 class="p-2">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
         <canvas id="server_creation_time"></canvas>
     </div>
     <div class="w-auto text-center bg-white p-3 mt-2" id="test_information">
@@ -99,8 +99,7 @@
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
                       fill="#52C0B5"/>
-            </svg>
-        </a> in {{ date('Y') }} by <a
+            </svg></a> in {{ date('Y') }} by <a
                 href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
@@ -109,26 +108,18 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            <?php
-                $labels = \App\Models\Provider::find(1)->checks()->where('check', '=', 'server_creation_time')->limit(12)->orderBy('id', 'DESC')->get()->map(function (
-                    $check
-                ) {
-                    return $check->created_at->format('d.m.Y h\:00 a');
-                })->toArray();
-                arsort($labels);
-
-
-                ?>
-            labels:{!! json_encode($labels) !!},
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->get()->map(function($check){
+        return  $check->created_at->format('d.m.Y h\:00 a');
+       })) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
-           $data = $provider->checks()->where('check','=','server_creation_time')->limit(12)->orderBy('id','DESC')->get()->map(function($check){
+           $data = $provider->checks()->where('check','=','server_creation_time')->limit(24)->get()->map(function($check){
     return [
     'x' => $check->created_at->format('d.m.Y H:i:s'),
     'y' => (float) $check->result
     ];})->toArray();
-    if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(12)->orderBy('id','DESC')->count()){
-    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(12)->orderBy('id','DESC')->count() - count($data);
+    if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->count()){
+    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->count() - count($data);
 
     for($i = 0; $i < $diff; $i++){
         array_unshift($data,[
@@ -136,7 +127,6 @@
             'y' => 0]);
         }
     }
-    arsort($data);
             return [
             'label' => $provider->name,
             'fill' => false,
@@ -175,34 +165,25 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            <?php
-                $labels = \App\Models\Provider::find(1)->checks()->where('check', '=', 'api_response_time')->limit(12)->orderBy('id', 'DESC')->get()->map(function (
-                    $check
-                ) {
-                    return $check->created_at->format('d.m.Y h\:00 a');
-                })->toArray();
-                arsort($labels);
-
-
-                ?>
-            labels:{!! json_encode($labels) !!},
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
+        return  $check->created_at->format('d.m.Y h\:00 a');
+       })) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
-               $data = $provider->checks()->where('check','=','api_response_time')->limit(12)->orderBy('id','DESC')->get()->map(function($check){
+               $data = $provider->checks()->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
     return [
     'x' => $check->created_at->format('d.m.Y H:i:s'),
     'y' => (float) $check->result
     ];})->toArray();
-             if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(12)->orderBy('id','DESC')->count()){
-    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(12)->orderBy('id','DESC')->count() - count($data);
+             if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->count()){
+    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->count() - count($data);
 
     for($i = 0; $i < $diff; $i++){
-        array_push($data,[
+        array_unshift($data,[
             'x' => 0,
             'y' => 0]);
         }
     }
-        arsort($data);
             return [
             'label' => $provider->name,
             'fill' => false,
