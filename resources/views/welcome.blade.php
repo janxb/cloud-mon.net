@@ -71,7 +71,7 @@
         <canvas id="api_response_time"></canvas>
     </div>
     <div class="w-auto h-100 text-center p-2 mt-2">
-        <h3 class="p-2">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
+        <h3 class="p-2">Time between api call and first successfully ping (in seconds last 12 hours)</h3>
         <canvas id="server_creation_time"></canvas>
     </div>
     <div class="w-auto text-center bg-white p-3 mt-2" id="test_information">
@@ -108,18 +108,18 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->get()->map(function($check){
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(12)->get()->map(function($check){
         return  $check->created_at->format('d.m.Y h\:00 a');
        })) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
-           $data = $provider->checks()->where('check','=','server_creation_time')->limit(24)->get()->map(function($check){
+           $data = $provider->checks()->where('check','=','server_creation_time')->limit(12)->get()->map(function($check){
     return [
     'x' => $check->created_at->format('d.m.Y H:i:s'),
     'y' => (float) $check->result
     ];})->toArray();
-    if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->count()){
-    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(24)->count() - count($data);
+    if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(12)->count()){
+    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','server_creation_time')->limit(12)->count() - count($data);
 
     for($i = 0; $i < $diff; $i++){
         array_unshift($data,[
@@ -165,18 +165,18 @@
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
+            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(12)->get()->map(function($check){
         return  $check->created_at->format('d.m.Y h\:00 a');
        })) !!},
             datasets:
             {!! json_encode(\App\Models\Provider::all()->map(function($provider){
-               $data = $provider->checks()->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
+               $data = $provider->checks()->where('check','=','api_response_time')->limit(12)->get()->map(function($check){
     return [
     'x' => $check->created_at->format('d.m.Y H:i:s'),
     'y' => (float) $check->result
     ];})->toArray();
-             if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->count()){
-    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->count() - count($data);
+             if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(12)->count()){
+    $diff = \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(12)->count() - count($data);
 
     for($i = 0; $i < $diff; $i++){
         array_unshift($data,[
