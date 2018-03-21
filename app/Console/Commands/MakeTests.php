@@ -46,7 +46,7 @@ class MakeTests extends Command
 
         $this->info(count($providers).' Provider');
         foreach ($providers as $provider) {
-            $this->info($provider);
+            $this->info($provider->name);
             $provider->fireChecks();
         }
     }

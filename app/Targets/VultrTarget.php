@@ -85,12 +85,15 @@ class VultrTarget extends AbstractTarget
 
             $start = microtime(true);
             $created_server = $this->vultr->server()->getList($created_server_id);
-            echo "Created Server: ".$created_server['main_ip'].PHP_EOL;
+            echo "Created Server: ".$created_server_id.PHP_EOL;
+            $t = 1;
             while ($created_server['server_state'] != 'ok') {
-                echo "Server State isn't okay".PHP_EOL;
+                echo $t." | Server State isn't okay".PHP_EOL;
                 $created_server = $this->vultr->server()->getList($created_server_id);
                 sleep(2);
+                $t++;
             }
+            echo "Got IP: ".$created_server['main_ip'].PHP_EOL;
             $ping = new Ping($created_server['main_ip'], 255, 5);
             $trys = 100;
             while ($ping->ping() == false && $trys != 0) {
@@ -106,7 +109,6 @@ class VultrTarget extends AbstractTarget
 
             return $check;
         }
-
     }
 
     /**
