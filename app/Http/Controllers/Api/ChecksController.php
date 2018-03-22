@@ -38,11 +38,11 @@ class ChecksController extends Controller
         $d = ['labels' => [], 'min' => '', 'max' => ''];
         $_d = Carbon::now()->startOfHour()->addHour()->subDay();
         $d['labels'][] = $_d->format('d.m.Y h\:00 a');
-        $d['min'] = $_d->format('Y-m-D H:i:s');
+        $d['min'] = Carbon::now()->startOfHour()->addHour()->subDay();
         for ($f = 1; $f < 24; $f++) {
             $d['labels'][] = $_d->startOfHour()->addHour()->format('d.m.Y h\:00 a');
         }
-        $d['max'] = $_d->format('Y-m-D H:i:s');
+        $d['max'] = Carbon::now()->endOfHour();
 
         return $d;
     }
@@ -58,8 +58,8 @@ class ChecksController extends Controller
                 'backgroundColor' => $provider->color,
                 'borderColor' => $provider->color,
                 'data' => Check::where('check', '=', $check)->where('provider_id', '=', $provider->id)->whereBetween('created_at', [
-                    $this->getLast24Hours()['min'],
-                    $this->getLast24Hours()['max'],
+                    $this->getLast24Hours()['min']->format('Y-m-d H:i:s'),
+                    $this->getLast24Hours()['max']->addHour()->format('Y-m-d H:i:s')
                 ])->get()->map(function (
                     $c
                 ) {
