@@ -30,7 +30,10 @@ class ChecksController extends Controller
     {
         if (in_array($check, ['server_creation_time', 'api_response_time'])) {
             return response()->json([
-                'checks' => Check::where('check', '=', $check)->get()->groupBy(function ($c) {
+                'checks' => Check::where('check', '=', $check)->whereBetween('created_at', [
+                    $this->getLast24Hours()['min']->format('Y-m-d H:i:s'),
+                    $this->getLast24Hours()['max']->addHour()->format('Y-m-d H:i:s'),
+                ])->get()->groupBy(function ($c) {
                     return $c->provider->name;
                 }),
             ]);
