@@ -108,7 +108,7 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    ['sever_creation_time', 'api_response_time'].forEach(function (val) {
+    ['server_creation_time', 'api_response_time'].forEach(function (val) {
         $.getJSON('/api/_checks/' + val, function (response) {
             console.log(response);
             var ctx = document.getElementById(val);
