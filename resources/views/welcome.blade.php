@@ -111,8 +111,8 @@
     ['sever_creation_time', 'api_response_time'].forEach(function (val) {
         $.getJSON('/api/_checks/' + val, function (response) {
             console.log(response);
-            var ctx = document.getElementById("val");
-            var myLineChart = new Chart(ctx, {
+            var ctx = document.getElementById(val);
+            new Chart(ctx, {
                 type: 'line',
                 data: response,
                 options: {
