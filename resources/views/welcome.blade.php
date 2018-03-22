@@ -101,127 +101,46 @@
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
                       fill="#52C0B5"/>
-            </svg></a> in {{ date('Y') }} by <a
+            </svg>
+        </a> in {{ date('Y') }} by <a
                 href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    var ctx = document.getElementById("server_creation_time");
-    var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)
-            ->checks()
-            ->where('check','=','server_creation_time')
-            ->where('created_at','>=',\Carbon\Carbon::now()->subDay())->limit(24)->get()->map(function($check){
-        return  $check->created_at->format('d.m.Y h\:00 a');
-       })) !!},
-            datasets:
-            {!! json_encode(\App\Models\Provider::all()->map(function($provider){
-           $data = $provider->checks()->where('check','=','server_creation_time')->where('created_at','>=',\Carbon\Carbon::now()->subDay())->limit(24)->get()->map(function($check){
-    return [
-    'x' => $check->created_at->format('d.m.Y H:i:s'),
-    'y' => (float) $check->result
-    ];})->toArray();
-    if(count($data) < \App\Models\Provider::find(1)->checks()->where('created_at','>=',\Carbon\Carbon::now()->subDay())->where('check','=','server_creation_time')->limit(24)->count()){
-    $diff = \App\Models\Provider::find(1)->checks()->where('created_at','>=',\Carbon\Carbon::now()->subDay())->where('check','=','server_creation_time')->limit(24)->count() - count($data);
-
-    for($i = 0; $i < $diff; $i++){
-        array_unshift($data,[
-            'x' => 0,
-            'y' => 0]);
-        }
-    }
-            return [
-            'label' => $provider->name,
-            'fill' => false,
-            'backgroundColor'=> $provider->color,
-            'borderColor' => $provider->color,
-            'data' => $data
-            ];
-            })) !!}
-        },
-        options: {
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Seconds'
+    ['sever_creation_time', 'api_response_time'].forEach(function (val) {
+        $.getJSON('/api/_checks/' + val, function (response) {
+            console.log(response);
+            var ctx = document.getElementById("val");
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: response,
+                options: {
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Seconds'
+                            }
+                        }],
+                        xAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: false
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Time on the Clock'
+                            }
+                        }],
                     }
-                }],
-                xAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: false
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Time on the Clock'
-                    }
-                }],
-            }
-        }
-    });
-    var ctx = document.getElementById("api_response_time");
-    var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels:{!! json_encode(\App\Models\Provider::find(1)->checks()->where('created_at','>=',\Carbon\Carbon::now()->subDay())->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
-        return  $check->created_at->format('d.m.Y h\:00 a');
-       })) !!},
-            datasets:
-            {!! json_encode(\App\Models\Provider::all()->map(function($provider){
-               $data = $provider->checks()->where('created_at','>=',\Carbon\Carbon::now()->subDay())->where('check','=','api_response_time')->limit(24)->get()->map(function($check){
-    return [
-    'x' => $check->created_at->format('d.m.Y H:i:s'),
-    'y' => (float) $check->result
-    ];})->toArray();
-             if(count($data) < \App\Models\Provider::find(1)->checks()->where('check','=','api_response_time')->limit(24)->count()){
-    $diff = \App\Models\Provider::find(1)->checks()->where('created_at','>=',\Carbon\Carbon::now()->subDay())->where('check','=','api_response_time')->limit(24)->count() - count($data);
-
-    for($i = 0; $i < $diff; $i++){
-        array_unshift($data,[
-            'x' => 0,
-            'y' => 0]);
-        }
-    }
-            return [
-            'label' => $provider->name,
-            'fill' => false,
-            'backgroundColor'=> $provider->color,
-            'borderColor' => $provider->color,
-            'data' => $data
-            ];
-            })) !!}
-        },
-        options: {
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Seconds'
-                    }
-                }],
-                xAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: false
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Time on the Clock'
-                    }
-                }],
-            }
-        }
+                }
+            });
+        });
     });
 </script>
 </body>

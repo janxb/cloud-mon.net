@@ -16,3 +16,17 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/', function () {
+    return response()->json([
+        'available_endpoints' => [
+            'Get all available endpoints' => route('api'),
+            'Get all available checks' => route('api.checks'),
+            'Get a specific check (see all available_checks)' => route('api.checks.type', ['server_creation_time']),
+            'Get all available providers' => route('api.providers'),
+        ],
+    ]);
+})->name('api');
+Route::get('checks', 'Api\ChecksController@index')->name('api.checks');
+Route::get('checks/{check}', 'Api\ChecksController@check')->name('api.checks.type');
+Route::get('_checks/{check}', 'Api\ChecksController@checksForCharts')->name('api.checks.type.for.charts');
+Route::get('providers', 'Api\ProvidersController@index')->name('api.providers');

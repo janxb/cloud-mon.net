@@ -17,7 +17,14 @@ class Provider extends Model
         'name',
         'target',
         'credentials',
-        'color',
+        'color'
+    ];
+
+    protected $hidden = [
+        'target',
+        'credentials',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -46,6 +53,9 @@ class Provider extends Model
         return $target = new $class($this);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function fireChecks()
     {
         $target = $this->getTarget();
