@@ -92,7 +92,7 @@
         <h5>Linode</h5>
         <p class="pt-2">On Linode we use the smallest available server, the Linode 1024.</p>
         <h5>Vultr</h5>
-        <p class="pt-2">On Vultr we use the 1024 MB ram system.</p>
+        <p class="pt-2"><strong>Vultr is no longer monitored by us, because the provisioning system is extremely sluggish according to our previous monitoring.</strong></p>
     </div>
     <div class="w-auto text-center p-3 mt-2 text-grey-darker">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i

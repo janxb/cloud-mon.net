@@ -6,7 +6,6 @@ Actually we monitor the following cloud provider:
 * [Hetzner Cloud](https://hetzner.cloud)
 * [DigitalOcean](https://digitalocean.com)
 * [Linode](https://linode.com)
-* [Vultr](https://vultr.com)
 
 Since we can not monitor all services of this providers we limit our self actually to the following checks:
 * Response Time of the servers list endpoint
