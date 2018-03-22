@@ -19,7 +19,7 @@ class ChecksController extends Controller
      */
     public function index()
     {
-        return response()->json(['available_checks' => Check::groupBy('check')->pluck('check')]);
+        return response()->json(['available_checks' => ['server_creation_time', 'api_response_time']]);
     }
 
     /**
@@ -28,7 +28,7 @@ class ChecksController extends Controller
      */
     public function check($check)
     {
-        if (in_array($check, Check::groupBy('check')->pluck('check')->toArray())) {
+        if (in_array($check, ['server_creation_time', 'api_response_time'])) {
             return response()->json([
                 'checks' => Check::where('check', '=', $check)->get()->groupBy(function ($c) {
                     return $c->provider->name;
