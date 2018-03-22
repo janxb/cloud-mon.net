@@ -45,6 +45,10 @@
                    class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
                     Test Information
                 </a>
+                <a href="#api"
+                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                    API
+                </a>
             </div>
         </div>
         <div>
@@ -92,7 +96,14 @@
         <h5>Linode</h5>
         <p class="pt-2">On Linode we use the smallest available server, the Linode 1024.</p>
         <h5>Vultr</h5>
-        <p class="pt-2"><strong>Vultr is no longer monitored by us, because the provisioning system is extremely sluggish according to our previous monitoring.</strong></p>
+        <p class="pt-2"><strong>Vultr is no longer monitored by us, because the provisioning system is extremely
+                sluggish according to our previous monitoring.</strong></p>
+    </div>
+    <div class="w-auto text-center bg-white p-3 mt-2" id="api">
+        <h3>API</h3>
+        <p class="pt-2">If you need our data in any way, we have a little json api for you. Since it is just a really basic
+            api, currently we have only the link to the api:</p>
+        <a href="/api" target="_blank">Go to the API.</a>
     </div>
     <div class="w-auto text-center p-3 mt-2 text-grey-darker">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i

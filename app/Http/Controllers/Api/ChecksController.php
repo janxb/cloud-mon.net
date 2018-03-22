@@ -9,22 +9,40 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ *
+ */
 class ChecksController extends Controller
 {
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         return response()->json(['available_checks' => Check::groupBy('check')->pluck('check')]);
     }
 
+    /**
+     * @param $check
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function check($check)
     {
-        return response()->json([
-            'checks' => Check::where('check', '=', $check)->get()->groupBy(function ($c) {
-                return $c->provider->name;
-            }),
-        ]);
+        if (in_array($check, Check::groupBy('check')->pluck('check')->toArray())) {
+            return response()->json([
+                'checks' => Check::where('check', '=', $check)->get()->groupBy(function ($c) {
+                    return $c->provider->name;
+                }),
+            ]);
+        } else {
+            return response()->json(['error' => "The type you asked isn't valid"]);
+        }
     }
 
+    /**
+     * @param $check
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function checksForCharts($check)
     {
         return response()->json([
@@ -33,6 +51,9 @@ class ChecksController extends Controller
         ]);
     }
 
+    /**
+     * @return array
+     */
     private function getLast24Hours()
     {
         $d = ['labels' => [], 'min' => '', 'max' => ''];
@@ -47,6 +68,10 @@ class ChecksController extends Controller
         return $d;
     }
 
+    /**
+     * @param $check
+     * @return array
+     */
     private function getDataSets($check)
     {
         $providers = Provider::all();
@@ -59,7 +84,7 @@ class ChecksController extends Controller
                 'borderColor' => $provider->color,
                 'data' => Check::where('check', '=', $check)->where('provider_id', '=', $provider->id)->whereBetween('created_at', [
                     $this->getLast24Hours()['min']->format('Y-m-d H:i:s'),
-                    $this->getLast24Hours()['max']->addHour()->format('Y-m-d H:i:s')
+                    $this->getLast24Hours()['max']->addHour()->format('Y-m-d H:i:s'),
                 ])->get()->map(function (
                     $c
                 ) {
