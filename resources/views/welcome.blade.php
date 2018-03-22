@@ -98,7 +98,7 @@
         <h5>Vultr</h5>
         <p class="pt-2">Vultr is no longer monitored by us, because the provisioning system is extremely
                 sluggish according to our previous monitoring.</p>
-        <p>Currently we have performed {{ \App\Models\Check::count() }} since {{ \App\Models\Check::first()->created_at->format('d.m.Y h\:00 a') }}</p>
+        <p>Currently we have performed {{ \App\Models\Check::count() }} since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
     </div>
     <div class="w-auto text-center bg-white p-3 mt-2" id="api">
         <h3>API</h3>
