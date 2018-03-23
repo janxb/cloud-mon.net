@@ -63,7 +63,7 @@
             <span class="block sm:inline">This monitoring is still work in progress and hasn't enough data to be valid!</span>
         </div>
     </div>
-    <div class="w-auto text-center max-w-sm mx-auto px-4 my-8">
+    <div class="w-auto text-center max-w-md mx-auto px-4 my-8">
         <h3 class="my-4">Welcome!</h3>
         <p>
             This is just a little monitoring for some cloud providers. We check every provider once a hour
@@ -96,26 +96,26 @@
         <p class="mb-2">We test only the performance of the api and the provision system.</p>
         <div class="flex flex-wrap md:mt-4">
             <div class="md:w-1/2 md:px-4">
-                <h5 class="mt-4 mb-2">Hetzner Cloud</h5>
+                <h4 class="mt-4 mb-2">Hetzner Cloud</h4>
                 <p class="mb-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the
                     cx11.</p>
             </div>
             <div class="md:w-1/2 md:px-4">
-                <h5 class="mt-4 mb-2">DigitalOcean</h5>
+                <h4 class="mt-4 mb-2">DigitalOcean</h4>
                 <p class="mb-2">On DigitalOcean we use the smallest available server, the s-1vcpu-1gb.</p>
             </div>
             <div class="md:w-1/2 md:px-4">
-                <h5 class="mt-4 mb-2">Linode</h5>
+                <h4 class="mt-4 mb-2">Linode</h4>
                 <p class="mb-2">On Linode we use the smallest available server, the Linode 1024.</p>
             </div>
             <div class="md:w-1/2 md:px-4">
-                <h5 class="mt-4 mb-2">Vultr</h5>
+                <h4 class="mt-4 mb-2">Vultr</h4>
                 <p class="mb-2">Vultr is no longer monitored by us, because the provisioning system is extremely
                     sluggish according to our previous monitoring.</p>
             </div>
         </div>
         <div class="text-center">
-            <h5 class="mt-4 mb-2">Your provider isn't here?</h5>
+            <h3 class="mt-4 mb-2">Your provider isn't here?</h3>
             <p class="mb-2">Just write me a mail or open a issue on Github if you want a specific providere here.</p>
         </div>
     </div>
