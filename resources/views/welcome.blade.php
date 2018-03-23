@@ -17,45 +17,45 @@
             crossorigin="anonymous"></script>
 </head>
 <body class="bg-grey-lighter">
+<nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3">
+    <div class="flex items-center flex-no-shrink text-white mr-6">
+        <img src="{{ asset('cloud_mon.png',true) }}" class="w-10">
+        <span class="font-semibold text-xl tracking-tight">cloud-mon.net</span>
+    </div>
+    <div class="block lg:hidden">
+        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
+            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>
+                    Menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+            </svg>
+        </button>
+    </div>
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="text-sm lg:flex-grow">
+            <a href="#api_response_time"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                API Response Time
+            </a>
+            <a href="#server_creation_time"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                Server Creation
+            </a>
+            <a href="#test_information"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                Test Information
+            </a>
+            <a href="#api"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                API
+            </a>
+        </div>
+    </div>
+    <div>
+        <a href="https://lukas-kaemmerling.de/legal" target="_blank"
+            class="block mt-4 text-sm lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">Impressum</a>
+    </div>
+</nav>
 <div class="container mx-auto">
-    <nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3">
-        <div class="flex items-center flex-no-shrink text-white mr-6">
-            <img src="{{ asset('cloud_mon.png',true) }}" class="w-10">
-            <span class="font-semibold text-xl tracking-tight">cloud-mon.net</span>
-        </div>
-        <div class="block lg:hidden">
-            <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
-                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>
-                        Menu</title>
-                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-                </svg>
-            </button>
-        </div>
-        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-            <div class="text-sm lg:flex-grow">
-                <a href="#api_response_time"
-                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    API Response Time
-                </a>
-                <a href="#server_creation_time"
-                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    Server Creation
-                </a>
-                <a href="#test_information"
-                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    Test Information
-                </a>
-                <a href="#api"
-                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    API
-                </a>
-            </div>
-        </div>
-        <div>
-            <a href="https://lukas-kaemmerling.de/legal" target="_blank"
-               class="block mt-4 text-sm lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">Impressum</a>
-        </div>
-    </nav>
 
     <div class="text-center w-auto">
         <div class="bg-orange-lightest border border-orange-light text-orange-dark px-4 py-3 rounded relative"
