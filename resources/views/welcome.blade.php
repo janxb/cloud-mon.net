@@ -16,105 +16,115 @@
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
 </head>
-<body class="bg-grey-lighter">
+<body class="bg-grey-lighter font-sans leading-normal">
+<nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3">
+    <div class="flex items-center flex-no-shrink text-white mr-6">
+        <img src="{{ asset('cloud_mon.png',true) }}" class="w-10">
+        <span class="font-semibold text-xl tracking-tight">cloud-mon.net</span>
+    </div>
+    <div class="block lg:hidden">
+        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
+            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>
+                    Menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+            </svg>
+        </button>
+    </div>
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="text-sm lg:flex-grow">
+            <a href="#api_response_time"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                API Response Time
+            </a>
+            <a href="#server_creation_time"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                Server Creation
+            </a>
+            <a href="#test_information"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                Test Information
+            </a>
+            <a href="#api"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                API
+            </a>
+        </div>
+    </div>
+    <div>
+        <a href="https://lukas-kaemmerling.de/legal" target="_blank"
+            class="block mt-4 text-sm lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">Impressum</a>
+    </div>
+</nav>
 <div class="container mx-auto">
-    <nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3">
-        <div class="flex items-center flex-no-shrink text-white mr-6">
-            <img src="{{ asset('cloud_mon.png',true) }}" class="w-10">
-            <span class="font-semibold text-xl tracking-tight">cloud-mon.net</span>
-        </div>
-        <div class="block lg:hidden">
-            <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
-                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>
-                        Menu</title>
-                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-                </svg>
-            </button>
-        </div>
-        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-            <div class="text-sm lg:flex-grow">
-                <a href="#api_response_time"
-                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    API Response Time
-                </a>
-                <a href="#server_creation_time"
-                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    Server Creation
-                </a>
-                <a href="#test_information"
-                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    Test Information
-                </a>
-                <a href="#api"
-                   class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    API
-                </a>
-            </div>
-        </div>
-        <div>
-            <a href="https://lukas-kaemmerling.de/legal" target="_blank"
-               class="block mt-4 text-sm lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">Impressum</a>
-        </div>
-    </nav>
-
-    <div class="text-center w-auto">
-        <div class="bg-orange-lightest border border-orange-light text-orange-dark px-4 py-3 rounded relative"
+    <div class="text-center w-auto my-4">
+        <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative"
              role="alert">
             <strong class="font-bold">Warning!</strong>
             <span class="block sm:inline">This monitoring is still work in progress and hasn't enough data to be valid!</span>
         </div>
     </div>
-    <div class="w-auto text-center bg-white p-3 mt-2">
-        <h3>Welcome!</h3>
-        <p class="pt-2">This is just a little monitoring for some cloud providers. We check every provider once a hour
+    <div class="w-auto text-center max-w-sm mx-auto px-4 my-8">
+        <h3 class="my-4">Welcome!</h3>
+        <p>
+            This is just a little monitoring for some cloud providers. We check every provider once a hour
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
-            the source available on <a href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a></p>
+            the source available on <a class="text-blue hover:text-blue-dark" href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a>
+        </p>
     </div>
-    <div class="w-auto h-100 text-center p-2 mt-2">
-        <h3 class="p-2">Response time of the servers list endpoint</h3>
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative">
+        <h3 class="my-4 font-medium">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
     </div>
-    <div class="w-auto h-100 text-center p-2 mt-2">
-        <h3 class="p-2">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative">
+        <h3 class="my-4 font-medium">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
         <canvas id="server_creation_time"></canvas>
     </div>
-    <div class="w-auto text-center bg-white p-3 mt-2" id="test_information">
-        <h3>Informations about the monitoring</h3>
-        <p class="pt-2">The server that runs the monitoring is located at the datacenter (Falkenstein) from Hetzner and
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto" id="test_information">
+        <h3 class="mt-8 mb-2 pt-8">Informations about the monitoring</h3>
+        <p class="mb-2">The server that runs the monitoring is located at the datacenter (Falkenstein) from Hetzner and
             is an
             instance of a
             Hetzner Cloud CX11 Server.</p>
-        <p class="pt-2">This test isn't associated with the tested Cloud Providers.</p>
-        <h4>Instanced Definition</h4>
-        <p class="pt-2">We start all servers with the default ubuntu 16.04 image from the provider. Actually we
+        <p class="mb-2">This test isn't associated with the tested Cloud Providers.</p>
+        <h4 class="mt-4 mb-2">Instanced Definition</h4>
+        <p class="mb-2">We start all servers with the default ubuntu 16.04 image from the provider. Actually we
             doesn't test the performance of the servers, so we used the cheapest available servers.</p>
-        <p class="pt-2">We test only the performance of the api and the provision system.</p>
-        <h5>Hetzner Cloud</h5>
-        <p class="pt-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the cx11.</p>
-        <h5>DigitalOcean</h5>
-        <p class="pt-2">On DigitalOcean we use the smallest available server, the s-1vcpu-1gb.</p>
-        <h5>Linode</h5>
-        <p class="pt-2">On Linode we use the smallest available server, the Linode 1024.</p>
-        <h5>Vultr</h5>
-        <p class="pt-2">Vultr is no longer monitored by us, because the provisioning system is extremely
-                sluggish according to our previous monitoring.</p>
-        <p>Currently we have performed {{ \App\Models\Check::count() }} since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
+        <p class="mb-2">We test only the performance of the api and the provision system.</p>
+        <div class="flex flex-wrap md:mt-4">
+            <div class="md:w-1/2 md:px-4">
+                <h5 class="mt-4 mb-2">Hetzner Cloud</h5>
+                <p class="mb-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the cx11.</p>
+            </div>
+            <div class="md:w-1/2 md:px-4">
+                <h5 class="mt-4 mb-2">DigitalOcean</h5>
+                <p class="mb-2">On DigitalOcean we use the smallest available server, the s-1vcpu-1gb.</p>
+            </div>
+            <div class="md:w-1/2 md:px-4">
+                <h5 class="mt-4 mb-2">Linode</h5>
+                <p class="mb-2">On Linode we use the smallest available server, the Linode 1024.</p>
+            </div>
+            <div class="md:w-1/2 md:px-4">
+                <h5 class="mt-4 mb-2">Vultr</h5>
+                <p class="mb-2">Vultr is no longer monitored by us, because the provisioning system is extremely
+                        sluggish according to our previous monitoring.</p>
+                <p>Currently we have performed {{ \App\Models\Check::count() }} since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
+            </div>
+        </div>
     </div>
-    <div class="w-auto text-center bg-white p-3 mt-2" id="api">
-        <h3>API</h3>
-        <p class="pt-2">If you need our data in any way, we have a little json api for you. Since it is just a really basic
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto border rounded-lg px-6 py-4 bg-grey-lightest" id="api">
+        <h3 class="my-2">API</h3>
+        <p class="mb-2">If you need our data in any way, we have a little json api for you. Since it is just a really basic
             api, currently we have only the link to the api:</p>
-        <a href="/api" target="_blank">Go to the API.</a>
+        <a href="/api" class="text-blue hover:text-blue-dark" target="_blank">Go to the API.</a>
     </div>
-    <div class="w-auto text-center p-3 mt-2 text-grey-darker">
+    <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i
                     class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com">
             <svg class="fill-current h-4 w-4 mr-2" width="54" height="54" viewBox="0 0 54 54"
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
                       fill="#52C0B5"/>
-            </svg>
-        </a> in {{ date('Y') }} by <a
+            </svg></a> in {{ date('Y') }} by <a class="text-blue hover:text-blue-dark"
                 href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
