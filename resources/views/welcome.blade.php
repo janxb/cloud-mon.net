@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="w-auto text-center max-w-md mx-auto px-4 my-8">
-        <h3 class="my-4">Welcome!</h3>
+        <h3 class="my-4">Welcome on cloud-mon.net!</h3>
         <p>
             This is just a little monitoring for some cloud providers. We check every provider once a hour
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
