@@ -56,9 +56,8 @@
     </div>
 </nav>
 <div class="container mx-auto">
-
-    <div class="text-center w-auto">
-        <div class="bg-orange-lightest border border-orange-light text-orange-dark px-4 py-3 rounded relative"
+    <div class="text-center w-auto my-4">
+        <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative"
              role="alert">
             <strong class="font-bold">Warning!</strong>
             <span class="block sm:inline">This monitoring is still work in progress and hasn't enough data to be valid!</span>
