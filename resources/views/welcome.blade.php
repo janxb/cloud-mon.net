@@ -16,7 +16,7 @@
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
 </head>
-<body class="bg-grey-lighter">
+<body class="bg-grey-lighter font-sans leading-normal">
 <nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3">
     <div class="flex items-center flex-no-shrink text-white mr-6">
         <img src="{{ asset('cloud_mon.png',true) }}" class="w-10">
