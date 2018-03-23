@@ -33,31 +33,31 @@
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
             <a href="#api_response_time"
-                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+               class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
                 API Response Time
             </a>
             <a href="#server_creation_time"
-                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+               class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
                 Server Creation
             </a>
             <a href="#test_information"
-                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+               class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
                 Test Information
             </a>
             <a href="#api"
-                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+               class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
                 API
             </a>
         </div>
     </div>
     <div>
         <a href="https://lukas-kaemmerling.de/legal" target="_blank"
-            class="block mt-4 text-sm lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">Impressum</a>
+           class="block mt-4 text-sm lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">Impressum</a>
     </div>
 </nav>
 <div class="container mx-auto">
     <div class="text-center w-auto my-4">
-        <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative"
+        <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
              role="alert">
             <strong class="font-bold">Warning!</strong>
             <span class="block sm:inline">This monitoring is still work in progress and hasn't enough data to be valid!</span>
@@ -68,14 +68,18 @@
         <p>
             This is just a little monitoring for some cloud providers. We check every provider once a hour
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
-            the source available on <a class="text-blue hover:text-blue-dark" href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a>
+            the source available on <a class="text-blue hover:text-blue-dark"
+                                       href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a>
         </p>
+        <p>Currently we have performed {{ \App\Models\Check::count() }}
+            since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
     </div>
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative">
+
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
         <h3 class="my-4 font-medium">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
     </div>
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative">
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
         <h3 class="my-4 font-medium">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
         <canvas id="server_creation_time"></canvas>
     </div>
@@ -93,7 +97,8 @@
         <div class="flex flex-wrap md:mt-4">
             <div class="md:w-1/2 md:px-4">
                 <h5 class="mt-4 mb-2">Hetzner Cloud</h5>
-                <p class="mb-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the cx11.</p>
+                <p class="mb-2">On the Hetzner Cloud (Ceph or local Storage) we use the smallest available server, the
+                    cx11.</p>
             </div>
             <div class="md:w-1/2 md:px-4">
                 <h5 class="mt-4 mb-2">DigitalOcean</h5>
@@ -106,26 +111,21 @@
             <div class="md:w-1/2 md:px-4">
                 <h5 class="mt-4 mb-2">Vultr</h5>
                 <p class="mb-2">Vultr is no longer monitored by us, because the provisioning system is extremely
-                        sluggish according to our previous monitoring.</p>
-                <p>Currently we have performed {{ \App\Models\Check::count() }} since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
+                    sluggish according to our previous monitoring.</p>
             </div>
         </div>
     </div>
-    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto border rounded-lg px-6 py-4 bg-grey-lightest" id="api">
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow" id="api">
         <h3 class="my-2">API</h3>
-        <p class="mb-2">If you need our data in any way, we have a little json api for you. Since it is just a really basic
+        <p class="mb-2">If you need our data in any way, we have a little json api for you. Since it is just a really
+            basic
             api, currently we have only the link to the api:</p>
         <a href="/api" class="text-blue hover:text-blue-dark" target="_blank">Go to the API.</a>
     </div>
     <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i
-                    class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com">
-            <svg class="fill-current h-4 w-4 mr-2" width="54" height="54" viewBox="0 0 54 54"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
-                      fill="#52C0B5"/>
-            </svg></a> in {{ date('Y') }} by <a class="text-blue hover:text-blue-dark"
-                href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
+                    class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com"><img src="tailwind.svg" class="fill-current h-4 w-4 mr-2"></a> in {{ date('Y') }} by <a class="text-blue hover:text-blue-dark"
+                                      href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
