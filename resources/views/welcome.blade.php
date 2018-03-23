@@ -114,6 +114,10 @@
                     sluggish according to our previous monitoring.</p>
             </div>
         </div>
+        <div class="text-center">
+            <h5 class="mt-4 mb-2">Your provider isn't here?</h5>
+            <p class="mb-2">Just write me a mail or open a issue on Github if you want a specific providere here.</p>
+        </div>
     </div>
     <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow" id="api">
         <h3 class="my-2">API</h3>
