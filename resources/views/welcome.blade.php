@@ -56,13 +56,15 @@
     </div>
 </nav>
 <div class="container mx-auto">
-    <div class="text-center w-auto my-4">
-        <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
-             role="alert">
-            <strong class="font-bold">Warning!</strong>
-            <span class="block sm:inline">This monitoring is still work in progress and hasn't enough data to be valid!</span>
+    @if(\App\Models\Check::count() < 1001)
+        <div class="text-center w-auto my-4">
+            <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
+                 role="alert">
+                <strong class="font-bold">Warning!</strong>
+                <span class="block sm:inline">This monitoring is still work in progress and hasn't enough data to be valid!</span>
+            </div>
         </div>
-    </div>
+    @endif
     <div class="w-auto text-center max-w-md mx-auto px-4 my-8">
         <h3 class="my-4">Welcome on cloud-mon.net!</h3>
         <p>
@@ -128,8 +130,10 @@
     </div>
     <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i
-                    class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com"><img src="tailwind.svg" class="fill-current h-4 w-4 mr-2"></a> in {{ date('Y') }} by <a class="text-blue hover:text-blue-dark"
-                                      href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
+                    class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com"><img src="tailwind.svg"
+                                                                                             class="fill-current h-4 w-4 mr-2"></a>
+        in {{ date('Y') }} by <a class="text-blue hover:text-blue-dark"
+                                 href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
