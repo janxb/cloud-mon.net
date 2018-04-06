@@ -24,6 +24,7 @@ use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
  */
 class DigitalOceanTarget extends AbstractTarget
 {
+
     /**
      * @var \DigitalOceanV2\DigitalOceanV2
      */
@@ -94,8 +95,10 @@ class DigitalOceanTarget extends AbstractTarget
     public function terminateAllServers()
     {
         $droplets = $this->digitalOcean->droplet()->getAll();
-        foreach ($droplets as $droplet){
-            $this->digitalOcean->droplet()->delete($droplet->id);
+        foreach ($droplets as $droplet) {
+            if (str_contains($droplet->name, 'test')) {
+                $this->digitalOcean->droplet()->delete($droplet->id);
+            }
         }
     }
 }
