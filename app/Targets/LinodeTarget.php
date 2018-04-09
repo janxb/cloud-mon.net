@@ -62,7 +62,7 @@ class LinodeTarget extends AbstractTarget
             sleep(0.4);
         }
         $disk = new DiskApi($this->provider->getCredentials()->api_key);
-        $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon', 1024, str_random());
+        $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon-'.env('APP_NAME'), 1024, str_random());
         $created_disk_id = $created_disk['DiskID'];
         $config = new ConfigApi($this->provider->getCredentials()->api_key);
         $created_config = $config->create($created_server_id, 'cloud-mon', 138, $created_disk_id);
