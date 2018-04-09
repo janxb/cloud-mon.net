@@ -81,7 +81,7 @@
             <a href="https://sing.cloud-mon.net">Singapore</a>
         </p>
         
-        @if(in_array(env('APP_ENV'),['sing','ny']))
+        @if(in_array(env('APP_NAME'),['sing','ny']))
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
                 <strong class="font-bold">Warning!</strong>
