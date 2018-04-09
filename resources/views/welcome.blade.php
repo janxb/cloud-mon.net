@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <title>cloud-mon.net - just another cloud monitoring</title>
-
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -72,11 +72,24 @@
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
             the source available on <a class="text-blue hover:text-blue-dark"
                                        href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a>
+        
         </p>
-        <p>Currently we have performed {{ \App\Models\Check::count() }}
+        <p>Currently we have performed {{ \App\Models\Check::count() }} Checks in this location
             since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
+        <p>Available Locations: <a href="https://cloud-mon.net">Germany</a>
+            <a href="https://do.cloud-mon.net">New York</a>
+            <a href="https://sing.cloud-mon.net">Singapore</a>
+        </p>
+        
+        @if(in_array(env('APP_ENV'),['sing','ny']))
+            <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
+                 role="alert">
+                <strong class="font-bold">Warning!</strong>
+                <span class="block sm:inline">Because of the costs of the monitoring, the checks from Singapore and New York are limited to Hetzner and Digital Ocean!</span>
+            </div>
+        @endif
     </div>
-
+    
     <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
         <h3 class="my-4 font-medium">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
@@ -87,10 +100,24 @@
     </div>
     <div class="w-auto text-center my-8 text-sm max-w-md mx-auto" id="test_information">
         <h3 class="mt-8 mb-2 pt-8">Informations about the monitoring</h3>
-        <p class="mb-2">The server that runs the monitoring is located at the datacenter (Falkenstein) from Hetzner and
-            is an
-            instance of a
-            Hetzner Cloud CX11 Server.</p>
+        <p class="mb-2">
+            @if(env('APP_NAME') == 'de')
+                The server that runs the monitoring is located at the datacenter (Falkenstein) from Hetzner and
+                is an
+                instance of a
+                Hetzner Cloud CX11 Server.
+            @endif
+            @if(env('APP_NAME') == 'sing')
+                The server that runs the monitoring is located at the datacenter (Singapore) from DigitalOcean and
+                is an
+                instance of a the smallest server.
+            @endif
+            @if(env('APP_NAME') == 'ny')
+                The server that runs the monitoring is located at the datacenter (New York) from DigitalOcean and
+                is an
+                instance of a the smallest server.
+            @endif
+        </p>
         <p class="mb-2">This test isn't associated with the tested Cloud Providers.</p>
         <h4 class="mt-4 mb-2">Instanced Definition</h4>
         <p class="mb-2">We start all servers with the default ubuntu 16.04 image from the provider. Actually we

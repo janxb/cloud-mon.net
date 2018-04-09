@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Provider bearbeiten</div>
-
+                    
                     <div class="card-body">
                         <form method="POST" action="{{ route('provider.update',$provider) }}">
                             {{ csrf_field() }}
@@ -23,7 +23,11 @@
                                 <label>Color</label>
                                 <input type="text" class="form-control" name="color" value="{{ $provider->color }}">
                             </div>
-                            <button type="submit" class="btn btn-primary">Speichern</button>
+                            <div class="form-group">
+                                <label>Color</label>
+                                <span class="form-control">{{$provider->getCredentials()->api_key}}</span>
+                                <button type="submit" class="btn btn-primary">Speichern</button>
+                            </div>
                         </form>
                     </div>
                 </div>
