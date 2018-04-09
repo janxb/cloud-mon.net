@@ -47,30 +47,34 @@ class DigitalOceanTarget extends AbstractTarget
      */
     public function checkServerCreationTime()
     {
-        // return the key api
-        $key = collect($this->digitalOcean->key()->getAll())->map(function ($key) {
-            return $key->id;
-        })->toArray();
+        try {
+            // return the key api
+            $key = collect($this->digitalOcean->key()->getAll())->map(function ($key) {
+                return $key->id;
+            })->toArray();
 
-        $created_server = $this->digitalOcean->droplet()->create('mon-cloud-test-digitalocean-'.env('APP_NAME').'.mon-cloud.net', 'fra1', 's-1vcpu-1gb', 'ubuntu-16-04-x64', false, false, false, $key);
-        $start = microtime(true);
+            $created_server = $this->digitalOcean->droplet()->create('mon-cloud-test-digitalocean-' . env('APP_NAME') . '.mon-cloud.net', 'fra1', 's-1vcpu-1gb', 'ubuntu-16-04-x64', false, false, false, $key);
+            $start = microtime(true);
 
-        while (empty($created_server->networks)) {
-            $created_server = $this->digitalOcean->droplet()->getById($created_server->id);
+            while (empty($created_server->networks)) {
+                $created_server = $this->digitalOcean->droplet()->getById($created_server->id);
+            }
+
+            $ping = new Ping($created_server->networks[0]->ipAddress, 255, 5);
+            $trys = 100;
+            while ($ping->ping() == false && $trys != 0) {
+                echo $trys;
+                $trys--;
+            }
+            $end = microtime(true);
+
+            $duration = $end - $start;
+
+            $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
+            $created_server = $this->digitalOcean->droplet()->delete($created_server->id);
+        } catch (\Exception $e) {
+            $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
         }
-
-        $ping = new Ping($created_server->networks[0]->ipAddress, 255, 5);
-        $trys = 100;
-        while ($ping->ping() == false && $trys != 0) {
-            echo $trys;
-            $trys--;
-        }
-        $end = microtime(true);
-
-        $duration = $end - $start;
-
-        $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-        $created_server = $this->digitalOcean->droplet()->delete($created_server->id);
 
         return $check;
     }
@@ -81,12 +85,16 @@ class DigitalOceanTarget extends AbstractTarget
      */
     public function checkApiResponseTime()
     {
-        $start = microtime(true);
-        $this->digitalOcean->droplet()->getAll();
-        $end = microtime(true);
-        $duration = $end - $start;
+        try {
+            $start = microtime(true);
+            $this->digitalOcean->droplet()->getAll();
+            $end = microtime(true);
+            $duration = $end - $start;
 
-        $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
+            $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
+        } catch (\Exception $e) {
+            $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => 0]);
+        }
     }
 
     /**

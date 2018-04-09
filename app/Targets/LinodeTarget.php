@@ -28,6 +28,7 @@ use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
  */
 class LinodeTarget extends AbstractTarget
 {
+
     /**
      * @var \Linode\LinodeApi
      */
@@ -50,44 +51,48 @@ class LinodeTarget extends AbstractTarget
      */
     public function checkServerCreationTime()
     {
-        // return the key api
-        $created_server = $this->linode->create(10, 1);
+        try {
+            // return the key api
+            $created_server = $this->linode->create(10, 1);
 
-        $created_server_id = $created_server['LinodeID'];
-        $start = microtime(true);
-        $created_server = $this->linode->getList($created_server_id);
-        while ($created_server[0]['STATUS'] != 0) {
-            echo "Next try if it is 'brand new'".PHP_EOL;
+            $created_server_id = $created_server['LinodeID'];
+            $start = microtime(true);
             $created_server = $this->linode->getList($created_server_id);
-            sleep(0.4);
-        }
-        $disk = new DiskApi($this->provider->getCredentials()->api_key);
-        $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon-'.env('APP_NAME'), 1024, str_random());
-        $created_disk_id = $created_disk['DiskID'];
-        $config = new ConfigApi($this->provider->getCredentials()->api_key);
-        $created_config = $config->create($created_server_id, 'cloud-mon', 138, $created_disk_id);
-        $created_config_id = $created_config['ConfigID'];
-        $this->linode->boot($created_server_id, $created_config_id);
-        $ip_api = new IpApi($this->provider->getCredentials()->api_key);
-        $ip = $ip_api->getList($created_server_id);
-        $created_server = $this->linode->getList($created_server_id);
-        while ($created_server[0]['STATUS'] != 1) {
-            echo "Next Try if it comes online".PHP_EOL;
+            while ($created_server[0]['STATUS'] != 0) {
+                echo "Next try if it is 'brand new'" . PHP_EOL;
+                $created_server = $this->linode->getList($created_server_id);
+                sleep(0.4);
+            }
+            $disk = new DiskApi($this->provider->getCredentials()->api_key);
+            $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon-' . env('APP_NAME'), 1024, str_random());
+            $created_disk_id = $created_disk['DiskID'];
+            $config = new ConfigApi($this->provider->getCredentials()->api_key);
+            $created_config = $config->create($created_server_id, 'cloud-mon', 138, $created_disk_id);
+            $created_config_id = $created_config['ConfigID'];
+            $this->linode->boot($created_server_id, $created_config_id);
+            $ip_api = new IpApi($this->provider->getCredentials()->api_key);
+            $ip = $ip_api->getList($created_server_id);
             $created_server = $this->linode->getList($created_server_id);
-            sleep(1);
-        }
-        $ping = new Ping($ip[0]['IPADDRESS'], 255, 5);
-        $trys = 100;
-        while ($ping->ping() == false && $trys != 0) {
-            echo $trys;
-            $trys--;
-        }
-        $end = microtime(true);
+            while ($created_server[0]['STATUS'] != 1) {
+                echo "Next Try if it comes online" . PHP_EOL;
+                $created_server = $this->linode->getList($created_server_id);
+                sleep(1);
+            }
+            $ping = new Ping($ip[0]['IPADDRESS'], 255, 5);
+            $trys = 100;
+            while ($ping->ping() == false && $trys != 0) {
+                echo $trys;
+                $trys--;
+            }
+            $end = microtime(true);
 
-        $duration = $end - $start;
+            $duration = $end - $start;
 
-        $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-        $this->linode->delete($created_server_id, true);
+            $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
+            $this->linode->delete($created_server_id, true);
+        } catch (\Exception $e) {
+            $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
+        }
 
         return $check;
     }
@@ -98,12 +103,16 @@ class LinodeTarget extends AbstractTarget
      */
     public function checkApiResponseTime()
     {
-        $start = microtime(true);
-        $this->linode->getList();
-        $end = microtime(true);
-        $duration = $end - $start;
+        try {
+            $start = microtime(true);
+            $this->linode->getList();
+            $end = microtime(true);
+            $duration = $end - $start;
 
-        $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
+            $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
+        } catch (\Exception $e) {
+            $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => 0]);
+        }
     }
 
     /**
