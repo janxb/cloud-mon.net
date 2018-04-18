@@ -92,7 +92,7 @@ class ChecksController extends Controller
                     $c
                 ) {
                     $c->x = $c->created_at->format('d.m.Y H:i:s');
-                    $c->y = $c->result;
+                    $c->y = ($c->result == 0) ? '' : $c->result;
 
                     return $c;
                 }),
