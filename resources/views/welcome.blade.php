@@ -123,6 +123,7 @@
         <p class="mb-2">We start all servers with the default ubuntu 16.04 image from the provider. Actually we
             doesn't test the performance of the servers, so we used the cheapest available servers.</p>
         <p class="mb-2">We test only the performance of the api and the provision system.</p>
+        <p class="mb-2">When there is no value for a time, this could be an error from the provider or the creation was running longer than an hour.</p>
         <div class="flex flex-wrap md:mt-4">
             <div class="md:w-1/2 md:px-4">
                 <h4 class="mt-4 mb-2">Hetzner Cloud</h4>
