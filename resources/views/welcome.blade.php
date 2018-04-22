@@ -103,11 +103,11 @@
         <canvas id="server_creation_time"></canvas>
     </div>
     <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
-        <h3 class="my-4 font-medium">Network - Upload Speedtest</h3>
+        <h3 class="my-4 font-medium">Network - Upload Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_upload"></canvas>
     </div>
     <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
-        <h3 class="my-4 font-medium">Network - Download Speedtest</h3>
+        <h3 class="my-4 font-medium">Network - Download Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_download"></canvas>
     </div>
     <div class="w-auto text-center my-8 text-sm max-w-md mx-auto" id="test_information">

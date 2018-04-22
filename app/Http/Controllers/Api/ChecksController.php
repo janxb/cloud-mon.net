@@ -105,9 +105,12 @@ class ChecksController extends Controller
                     $this->getLast24Hours()['max']->addHour()->format('Y-m-d H:i:s'),
                 ])->get()->map(function (
                     $c
-                ) {
+                ) use ($check) {
                     $c->x = $c->created_at->format('d.m.Y H:i:s');
                     $c->y = $c->result = ($c->result == 0) ? null : $c->result;
+                    if (str_contains($check, 'network')) {
+                        $c->y = $c->y / 1000000;
+                    }
 
                     return $c;
                 }),
