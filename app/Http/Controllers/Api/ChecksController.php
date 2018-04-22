@@ -14,13 +14,19 @@ use App\Http\Controllers\Controller;
  */
 class ChecksController extends Controller
 {
-
     /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        return response()->json(['available_checks' => ['server_creation_time', 'api_response_time']]);
+        return response()->json([
+            'available_checks' => [
+                'server_creation_time',
+                'api_response_time',
+                'speed_test_upload',
+                'speed_test_download',
+            ],
+        ]);
     }
 
     /**
@@ -30,7 +36,12 @@ class ChecksController extends Controller
      */
     public function check($check)
     {
-        if (in_array($check, ['server_creation_time', 'api_response_time'])) {
+        if (in_array($check, [
+            'server_creation_time',
+            'api_response_time',
+            'speed_test_upload',
+            'speed_test_download',
+        ])) {
             return response()->json([
                 'checks' => Check::where('check', '=', $check)->whereBetween('created_at', [
                     $this->getLast24Hours()['min']->format('Y-m-d H:i:s'),
@@ -73,7 +84,6 @@ class ChecksController extends Controller
 
         return $d;
     }
-    
 
     /**
      * @param $check
