@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>cloud-mon.net - just another cloud monitoring</title>
-    
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -48,6 +48,10 @@
                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
                 API
             </a>
+            <a href="https://twitter.com/CloudMonNet"
+               class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4" target="_blank">
+                Twitter
+            </a>
         </div>
     </div>
     <div>
@@ -72,7 +76,7 @@
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
             the source available on <a class="text-blue hover:text-blue-dark"
                                        href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a>
-        
+
         </p>
         <p>Currently we have performed {{ \App\Models\Check::count() }} Checks in this location
             since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
@@ -80,7 +84,7 @@
             <a href="https://do.cloud-mon.net">New York</a>
             <a href="https://sing.cloud-mon.net">Singapore</a>
         </p>
-        
+
         @if(in_array(env('APP_NAME'),['sing','ny']))
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
@@ -89,7 +93,7 @@
             </div>
         @endif
     </div>
-    
+
     <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
         <h3 class="my-4 font-medium">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
@@ -123,7 +127,8 @@
         <p class="mb-2">We start all servers with the default ubuntu 16.04 image from the provider. Actually we
             doesn't test the performance of the servers, so we used the cheapest available servers.</p>
         <p class="mb-2">We test only the performance of the api and the provision system.</p>
-        <p class="mb-2">When there is no value for a time, this could be an error from the provider or the creation was running longer than an hour.</p>
+        <p class="mb-2">When there is no value for a time, this could be an error from the provider or the creation was
+            running longer than an hour.</p>
         <div class="flex flex-wrap md:mt-4">
             <div class="md:w-1/2 md:px-4">
                 <h4 class="mt-4 mb-2">Hetzner Cloud</h4>
