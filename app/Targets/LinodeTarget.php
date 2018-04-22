@@ -28,7 +28,6 @@ use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
  */
 class LinodeTarget extends AbstractTarget
 {
-
     /**
      * @var \Linode\LinodeApi
      */
@@ -59,12 +58,12 @@ class LinodeTarget extends AbstractTarget
             $start = microtime(true);
             $created_server = $this->linode->getList($created_server_id);
             while ($created_server[0]['STATUS'] != 0) {
-                echo "Next try if it is 'brand new'" . PHP_EOL;
+                echo "Next try if it is 'brand new'".PHP_EOL;
                 $created_server = $this->linode->getList($created_server_id);
                 sleep(0.4);
             }
             $disk = new DiskApi($this->provider->getCredentials()->api_key);
-            $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon-' . env('APP_NAME'), 1024, str_random());
+            $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon-'.env('APP_NAME').rand(), 1024, str_random(), file_get_contents(storage_path('app/cloud_mon.key')));
             $created_disk_id = $created_disk['DiskID'];
             $config = new ConfigApi($this->provider->getCredentials()->api_key);
             $created_config = $config->create($created_server_id, 'cloud-mon', 138, $created_disk_id);
@@ -74,7 +73,7 @@ class LinodeTarget extends AbstractTarget
             $ip = $ip_api->getList($created_server_id);
             $created_server = $this->linode->getList($created_server_id);
             while ($created_server[0]['STATUS'] != 1) {
-                echo "Next Try if it comes online" . PHP_EOL;
+                echo "Next Try if it comes online".PHP_EOL;
                 $created_server = $this->linode->getList($created_server_id);
                 sleep(1);
             }
@@ -89,7 +88,7 @@ class LinodeTarget extends AbstractTarget
             $duration = $end - $start;
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-            $this->linode->delete($created_server_id, true);
+            $this->speedTest($ip[0]['IPADDRESS']);
         } catch (\Exception $e) {
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
         }

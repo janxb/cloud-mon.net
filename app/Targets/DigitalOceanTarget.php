@@ -24,7 +24,6 @@ use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
  */
 class DigitalOceanTarget extends AbstractTarget
 {
-
     /**
      * @var \DigitalOceanV2\DigitalOceanV2
      */
@@ -53,7 +52,7 @@ class DigitalOceanTarget extends AbstractTarget
                 return $key->id;
             })->toArray();
 
-            $created_server = $this->digitalOcean->droplet()->create('mon-cloud-test-digitalocean-' . env('APP_NAME') . '.mon-cloud.net', 'fra1', 's-1vcpu-1gb', 'ubuntu-16-04-x64', false, false, false, $key);
+            $created_server = $this->digitalOcean->droplet()->create('mon-cloud-test-digitalocean-'.env('APP_NAME').rand().'.mon-cloud.net', 'fra1', 's-1vcpu-1gb', 'ubuntu-16-04-x64', false, false, false, $key);
             $start = microtime(true);
 
             while (empty($created_server->networks)) {
@@ -71,8 +70,9 @@ class DigitalOceanTarget extends AbstractTarget
             $duration = $end - $start;
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-            $created_server = $this->digitalOcean->droplet()->delete($created_server->id);
+            $this->speedTest($created_server->networks[0]->ipAddress);
         } catch (\Exception $e) {
+            echo $e->getMessage();
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
         }
 

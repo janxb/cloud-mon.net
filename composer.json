@@ -12,6 +12,7 @@
         "laravel/tinker": "^1.0",
         "lkdevelopment/hetzner-cloud-php-sdk": "^0.0.8",
         "malc0mn/vultr-api-client": "^1.1",
+        "phpseclib/phpseclib": "^2.0",
         "toin0u/digitalocean-v2": "~2.0",
         "webinarium/linode-api3": "^1.1"
     },

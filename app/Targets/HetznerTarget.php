@@ -22,7 +22,6 @@ use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
  */
 class HetznerTarget extends AbstractTarget
 {
-
     /**
      * @var \LKDev\HetznerCloud\HetznerAPIClient
      */
@@ -55,7 +54,10 @@ class HetznerTarget extends AbstractTarget
             $location = $locations->get(1);
             $ssh_keys = new SSHKeys();
 
-            $created_server = $server->create('mon-cloud-test-hetzner-' . env('APP_NAME') . '.mon-cloud.net', $serverType, $image, $location, null, [18802]);
+            $created_server = $server->create('mon-cloud-test-hetzner-'.env('APP_NAME').rand().'.mon-cloud.net', $serverType, $image, $location, null, [
+                18802,
+                33790,
+            ]);
             $start = microtime(true);
             $ping = new Ping($created_server->publicNet->ipv4->ip, 255, 5);
             $trys = 100;
@@ -68,9 +70,9 @@ class HetznerTarget extends AbstractTarget
             $duration = $end - $start;
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-            $created_server->delete();
+            $this->speedTest($created_server->publicNet->ipv4->ip);
         } catch (\Exception $e) {
-
+            echo $e->getMessage();
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
         }
 
