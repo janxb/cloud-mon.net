@@ -63,7 +63,7 @@ class LinodeTarget extends AbstractTarget
                 sleep(0.4);
             }
             $disk = new DiskApi($this->provider->getCredentials()->api_key);
-            $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon-'.env('APP_NAME').rand(), 1024, str_random(), file_get_contents(storage_path('app/cloud_mon.key')));
+            $created_disk = $disk->createFromDistribution($created_server_id, 146, 'cloud-mon-'.env('APP_NAME').rand(), 1024, str_random(), str_replace(PHP_EOL, '', file_get_contents(storage_path('app/cloud_mon.key'))));
             $created_disk_id = $created_disk['DiskID'];
             $config = new ConfigApi($this->provider->getCredentials()->api_key);
             $created_config = $config->create($created_server_id, 'cloud-mon', 138, $created_disk_id);
@@ -91,6 +91,7 @@ class LinodeTarget extends AbstractTarget
             $this->speedTest($ip[0]['IPADDRESS']);
             $this->linode->delete($created_server_id, true);
         } catch (\Exception $e) {
+            echo $e->getMessage();
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
         }
 
