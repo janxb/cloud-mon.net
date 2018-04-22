@@ -89,6 +89,7 @@ class LinodeTarget extends AbstractTarget
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
             $this->speedTest($ip[0]['IPADDRESS']);
+            $this->linode->delete($created_server_id, true);
         } catch (\Exception $e) {
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
         }

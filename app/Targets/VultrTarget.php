@@ -106,6 +106,7 @@ class VultrTarget extends AbstractTarget
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
             $this->speedTest($created_server['main_ip']);
+            $this->vultr->server()->destroy($created_server_id);
 
             return $check;
         }
