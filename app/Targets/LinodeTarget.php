@@ -115,8 +115,10 @@ class LinodeTarget extends AbstractTarget
             $duration = $end - $start;
 
             $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
+            Log::setup($this->provider, $check, null, 'success');
         } catch (\Exception $e) {
             $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => 0]);
+            Log::setup($this->provider, $check, null, $e->getMessage());
         }
     }
 
