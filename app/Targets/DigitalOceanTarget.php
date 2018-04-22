@@ -71,6 +71,7 @@ class DigitalOceanTarget extends AbstractTarget
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
             $this->speedTest($created_server->networks[0]->ipAddress);
+            $this->digitalOcean->droplet()->delete($created_server->id);
         } catch (\Exception $e) {
             echo $e->getMessage();
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);

@@ -71,6 +71,7 @@ class HetznerTarget extends AbstractTarget
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
             $this->speedTest($created_server->publicNet->ipv4->ip);
+            $created_server->delete();
         } catch (\Exception $e) {
             echo $e->getMessage();
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
