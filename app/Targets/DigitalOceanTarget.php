@@ -8,6 +8,7 @@
 
 namespace App\Targets;
 
+use App\Models\Log;
 use App\Models\Provider;
 use DigitalOceanV2\Adapter\GuzzleHttpAdapter;
 use DigitalOceanV2\DigitalOceanV2;
@@ -70,11 +71,13 @@ class DigitalOceanTarget extends AbstractTarget
             $duration = $end - $start;
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-            $this->speedTest($created_server->networks[0]->ipAddress);
+            Log::setup($this->provider, $check, $created_server->id, 'create_success');
+            $this->speedTest($created_server->networks[0]->ipAddress, $created_server->id);
             $this->digitalOcean->droplet()->delete($created_server->id);
         } catch (\Exception $e) {
             echo $e->getMessage();
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
+            Log::setup($this->provider, $check, $created_server->id, $e->getMessage());
         }
 
         return $check;
@@ -93,8 +96,10 @@ class DigitalOceanTarget extends AbstractTarget
             $duration = $end - $start;
 
             $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => $duration]);
+            Log::setup($this->provider, $check, null, 'success');
         } catch (\Exception $e) {
             $check = $this->provider->checks()->create(['check' => 'api_response_time', 'result' => 0]);
+            Log::setup($this->provider, $check, null, $e->getMessage());
         }
     }
 

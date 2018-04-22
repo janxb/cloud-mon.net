@@ -8,6 +8,7 @@
 
 namespace App\Targets;
 
+use App\Models\Log;
 use App\Models\Provider;
 use JJG\Ping;
 use LKDev\HetznerCloud\HetznerAPIClient;
@@ -22,7 +23,6 @@ use LKDev\HetznerCloud\Models\SSHKeys\SSHKeys;
  */
 class HetznerCephTarget extends HetznerTarget
 {
-
     /**
      * @var \LKDev\HetznerCloud\HetznerAPIClient
      */
@@ -45,6 +45,7 @@ class HetznerCephTarget extends HetznerTarget
      */
     public function checkServerCreationTime()
     {
+        $server_id = null;
         try {
             $server = new Servers();
             $serverTypes = new ServerTypes();
@@ -55,7 +56,11 @@ class HetznerCephTarget extends HetznerTarget
             $location = $locations->get(1);
             $ssh_keys = new SSHKeys();
 
-            $created_server = $server->create('mon-cloud-test-hetzner-ceph-' . env('APP_NAME').rand() . '.mon-cloud.net', $serverType, $image, $location, null, [18802,33790]);
+            $created_server = $server->create('mon-cloud-test-hetzner-ceph-'.env('APP_NAME').rand().'.mon-cloud.net', $serverType, $image, $location, null, [
+                18802,
+                33790,
+            ]);
+            $server_id = $created_server->id;
             $start = microtime(true);
             $ping = new Ping($created_server->publicNet->ipv4->ip, 255, 5);
             $trys = 100;
@@ -68,10 +73,12 @@ class HetznerCephTarget extends HetznerTarget
             $duration = $end - $start;
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-            $this->speedTest($created_server->publicNet->ipv4->ip);
+            Log::setup($this->provider, $check, $created_server->id, 'create_success');
+            $this->speedTest($created_server->publicNet->ipv4->ip, $created_server->id);
             $created_server->delete();
         } catch (\Exception $e) {
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
+            Log::setup($this->provider, $check, $server_id, $e->getMessage());
         }
 
         return $check;

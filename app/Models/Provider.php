@@ -20,6 +20,9 @@ class Provider extends Model
         'color'
     ];
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'target',
         'credentials',
@@ -67,5 +70,12 @@ class Provider extends Model
                 call_user_func([$target, $method->name]);
             }
         }
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function logs(){
+        return $this->hasMany(Log::class);
     }
 }

@@ -8,6 +8,7 @@
 
 namespace App\Targets;
 
+use App\Models\Log;
 use App\Models\Provider;
 use phpseclib\Crypt\RSA;
 use phpseclib\Net\SSH2;
@@ -21,6 +22,8 @@ abstract class AbstractTarget
      * @var \App\Models\Provider
      */
     protected $provider;
+
+    const SPEED_TEST_MAX_TRYS = 20;
 
     /**
      * AbstractTarget constructor.
@@ -45,7 +48,7 @@ abstract class AbstractTarget
     /**
      * @param $ip
      */
-    public function speedTest($ip)
+    public function speedTest($ip, $serverId = null)
     {
         echo "Perform Speedtest".PHP_EOL;
         $key = new RSA();
@@ -57,7 +60,7 @@ abstract class AbstractTarget
         echo "Wait some seconds to help the server get up and running".PHP_EOL;
         sleep(15); // Wait 15 seconds, since the server could need some time to be sshable.
         $main_trys = 0;
-        while ($main_trys < 20) {
+        while ($main_trys < self::SPEED_TEST_MAX_TRYS) {
             sleep(5); // Wait 5 Seconds
             try {
                 $ssh = new SSH2($ip);
@@ -75,7 +78,7 @@ abstract class AbstractTarget
                     echo "Done".PHP_EOL;
                     $lines = [];
                     $data = [];
-                    $trys = 30;
+                    $trys = self::SPEED_TEST_MAX_TRYS * 2;
                     $parsed = false;
                     while ($parsed == false) {
                         echo "Try: ".$trys.' from max: 20'.PHP_EOL;
@@ -106,11 +109,14 @@ abstract class AbstractTarget
                         'check' => 'speed_test_upload',
                         'result' => $data['upload'],
                     ]);
+
+                    Log::setup($this->provider, $check, $serverId, 'speed_test_success');
                     $check = $this->provider->checks()->create([
                         'check' => 'speed_test_download',
                         'result' => $data['download'],
                     ]);
-                    $main_trys = 500;
+                    Log::setup($this->provider, $check, $serverId, 'speed_test_success');
+                    $main_trys = self::SPEED_TEST_MAX_TRYS * 100;
                 }
             } catch (\Exception $e) {
                 // echo $ssh->getLog();
@@ -118,9 +124,11 @@ abstract class AbstractTarget
                 $main_trys++;
             }
         }
-        if ($main_trys < 15) {
+        if ($main_trys < self::SPEED_TEST_MAX_TRYS) {
             $check = $this->provider->checks()->create(['check' => 'speed_test_upload', 'result' => 0]);
+            Log::setup($this->provider, $check, $serverId, 'Running out of tries. Max Trys: '.self::SPEED_TEST_MAX_TRYS);
             $check = $this->provider->checks()->create(['check' => 'speed_test_download', 'result' => 0]);
+            Log::setup($this->provider, $check, $serverId, 'Running out of tries. Max Trys: '.self::SPEED_TEST_MAX_TRYS);
         }
     }
 

@@ -8,6 +8,7 @@
 
 namespace App\Targets;
 
+use App\Models\Log;
 use App\Models\Provider;
 use DigitalOceanV2\Adapter\GuzzleHttpAdapter;
 use DigitalOceanV2\DigitalOceanV2;
@@ -50,6 +51,7 @@ class LinodeTarget extends AbstractTarget
      */
     public function checkServerCreationTime()
     {
+        $created_server_id = null;
         try {
             // return the key api
             $created_server = $this->linode->create(10, 1);
@@ -88,11 +90,13 @@ class LinodeTarget extends AbstractTarget
             $duration = $end - $start;
 
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => $duration]);
-            $this->speedTest($ip[0]['IPADDRESS']);
+            Log::setup($this->provider, $check, $created_server_id, 'create_success');
+            $this->speedTest($ip[0]['IPADDRESS'], $created_server_id);
             $this->linode->delete($created_server_id, true);
         } catch (\Exception $e) {
             echo $e->getMessage();
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
+            Log::setup($this->provider, $check, $created_server_id, 'create_success');
         }
 
         return $check;
