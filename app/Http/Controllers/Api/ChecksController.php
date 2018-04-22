@@ -108,7 +108,7 @@ class ChecksController extends Controller
                 ) use ($check) {
                     $c->x = $c->created_at->format('d.m.Y H:i:s');
                     $c->y = $c->result = ($c->result == 0) ? null : $c->result;
-                    if (str_contains($check, 'network')) {
+                    if (str_contains($check, 'speed_test')) {
                         $c->y = $c->y / 1000000;
                     }
 
