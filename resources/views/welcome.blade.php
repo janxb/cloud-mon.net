@@ -102,6 +102,14 @@
         <h3 class="my-4 font-medium">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
         <canvas id="server_creation_time"></canvas>
     </div>
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+        <h3 class="my-4 font-medium">Network - Upload Speedtest</h3>
+        <canvas id="speed_test_upload"></canvas>
+    </div>
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+        <h3 class="my-4 font-medium">Network - Download Speedtest</h3>
+        <canvas id="speed_test_download"></canvas>
+    </div>
     <div class="w-auto text-center my-8 text-sm max-w-md mx-auto" id="test_information">
         <h3 class="mt-8 mb-2 pt-8">Informations about the monitoring</h3>
         <p class="mb-2">
@@ -171,7 +179,7 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    ['server_creation_time', 'api_response_time'].forEach(function (val) {
+    ['server_creation_time', 'api_response_time', 'speed_test_upload', 'speed_test_download'].forEach(function (val) {
         $.getJSON('/api/_checks/' + val, function (response) {
             console.log(response);
             var ctx = document.getElementById(val);
