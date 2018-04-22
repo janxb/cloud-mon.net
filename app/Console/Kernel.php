@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('check:tests')->hourly();
 
-        $schedule->command('check:terminateAllServers')->hourlyAt(30);
+        $schedule->command('check:terminateAllServers')->hourlyAt(50);
     }
 
     /**

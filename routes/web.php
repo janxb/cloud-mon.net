@@ -14,11 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/logs', function () {
+    return view('logs');
+});
 Auth::routes();
 
-
-Route::group(['middleware' => 'auth'],function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('provider','ProviderController');
+    Route::resource('provider', 'ProviderController');
 });
