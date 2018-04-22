@@ -1,3 +1,4 @@
 *
 !public/
 !.gitignore
+!cloud_mon.pub

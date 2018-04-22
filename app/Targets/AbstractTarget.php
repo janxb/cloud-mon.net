@@ -57,7 +57,8 @@ abstract class AbstractTarget
         echo "Wait some seconds to help the server get up and running".PHP_EOL;
         sleep(15); // Wait 15 seconds, since the server could need some time to be sshable.
         $main_trys = 0;
-        while ($main_trys < 10) {
+        while ($main_trys < 20) {
+            sleep(5); // Wait 5 Seconds
             try {
                 $ssh = new SSH2($ip);
             } catch (\Exception $e) {
@@ -74,7 +75,7 @@ abstract class AbstractTarget
                     echo "Done".PHP_EOL;
                     $lines = [];
                     $data = [];
-                    $trys = 20;
+                    $trys = 30;
                     $parsed = false;
                     while ($parsed == false) {
                         echo "Try: ".$trys.' from max: 20'.PHP_EOL;
@@ -109,7 +110,7 @@ abstract class AbstractTarget
                         'check' => 'speed_test_download',
                         'result' => $data['download'],
                     ]);
-                    $main_trys = 15;
+                    $main_trys = 500;
                 }
             } catch (\Exception $e) {
                 // echo $ssh->getLog();
