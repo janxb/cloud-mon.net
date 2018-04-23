@@ -245,13 +245,15 @@
 
     function toggleNav() {
         if ($('#nav').hasClass('hidden')) {
-            $('#nav').fadeIn('slow', function () {
-                $('#nav').removeClass('hidden');
+            $('#nav').fadeIn('fast', function () {
+
             });
+            $('#nav').removeClass('hidden');
         } else {
-            $('#nav').fadeOut('slow', function () {
-                $('#nav').removeClass('hidden');
+            $('#nav').fadeOut('fast', function () {
+
             });
+            $('#nav').addClass('hidden');
         }
     }
 </script>
