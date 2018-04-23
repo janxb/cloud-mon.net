@@ -30,7 +30,7 @@
             </svg>
         </button>
     </div>
-    <div class="w-full block invisible flex-grow lg:flex lg:items-center lg:w-auto lg:visible" id="nav">
+    <div class="w-full block hidden flex-grow lg:flex lg:items-center lg:w-auto lg:block" id="nav">
         <div class="text-sm lg:flex-grow">
             <a href="#api_response_time"
                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
@@ -244,10 +244,14 @@
     });
 
     function toggleNav() {
-        if ($('#nav').hasClass('invisible')) {
-            $('#nav').removeClass('invisible');
+        if ($('#nav').hasClass('hidden')) {
+            $('#nav').fadeIn('slow', function () {
+                $('#nav').removeClass('hidden');
+            });
         } else {
-            $('#nav').addClass('invisible');
+            $('#nav').fadeOut('slow', function () {
+                $('#nav').removeClass('hidden');
+            });
         }
     }
 </script>
