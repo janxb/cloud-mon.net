@@ -108,10 +108,16 @@ class ChecksController extends Controller
         return $response;
     }
 
+    /**
+     * @param $check
+     * @param $provider
+     *
+     * @return array
+     */
     private function getData($check, $provider)
     {
         $data = [];
-        for ($time = $this->getLast24Hours()['min']->copy()->subHour(); $time < $this->getLast24Hours()['max']->addHour(); $time->addHour()) {
+        for ($time = $this->getLast24Hours()['min']->copy(); $time <= $this->getLast24Hours()['max']->addHour(); $time->addHour()) {
             $_data = Check::where('check', '=', $check)->where('provider_id', '=', $provider->id)->where('created_at', 'LIKE', $time->format('Y-m-d H%'))->first();
             if ($_data == null) {
                 $_data = new \stdClass();
