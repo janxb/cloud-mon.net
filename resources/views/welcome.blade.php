@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <title>cloud-mon.net - just another cloud monitoring</title>
-
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -23,14 +23,14 @@
         <span class="font-semibold text-xl tracking-tight">cloud-mon.net</span>
     </div>
     <div class="block lg:hidden">
-        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
+        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white" onclick="toggleNav()">
             <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>
                     Menu</title>
                 <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
             </svg>
         </button>
     </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="w-full block hidden flex-grow lg:flex lg:items-center lg:w-auto lg:block" id="nav">
         <div class="text-sm lg:flex-grow">
             <a href="#api_response_time"
                class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
@@ -54,10 +54,6 @@
             </a>
         </div>
     </div>
-    <div>
-        <a href="https://lukas-kaemmerling.de/legal" target="_blank"
-           class="block mt-4 text-sm lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">Impressum</a>
-    </div>
 </nav>
 <div class="container mx-auto">
     @if(\App\Models\Check::count() < 1001)
@@ -76,7 +72,7 @@
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
             the source available on <a class="text-blue hover:text-blue-dark"
                                        href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a>
-
+        
         </p>
         <p>Currently we have performed {{ \App\Models\Check::count() }} Checks in this location
             since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
@@ -84,7 +80,7 @@
             <a href="https://do.cloud-mon.net">New York</a>
             <a href="https://sing.cloud-mon.net">Singapore</a>
         </p>
-
+        
         @if(in_array(env('APP_NAME'),['sing','ny']))
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
@@ -93,7 +89,7 @@
             </div>
         @endif
     </div>
-
+    
     <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
         <h3 class="my-4 font-medium">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
@@ -175,6 +171,7 @@
                                                                                              class="fill-current h-4 w-4 mr-2"></a>
         in {{ date('Y') }} by <a class="text-blue hover:text-blue-dark"
                                  href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
+        <a href="https://lukas-kaemmerling.de/legal" target="_blank" class="text-blue hover:text-blue-dark">Impressum</a>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -245,6 +242,20 @@
             });
         });
     });
+
+    function toggleNav() {
+        if ($('#nav').hasClass('hidden')) {
+            $('#nav').fadeIn('fast', function () {
+
+            });
+            $('#nav').removeClass('hidden');
+        } else {
+            $('#nav').fadeOut('fast', function () {
+
+            });
+            $('#nav').addClass('hidden');
+        }
+    }
 </script>
 </body>
 </html>
