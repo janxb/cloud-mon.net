@@ -95,19 +95,19 @@
         @endif
     </div>
     
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'api_response_time') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
     </div>
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'server_creation_time') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
         <canvas id="server_creation_time"></canvas>
     </div>
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'speed_test_upload') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Network - Upload Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_upload"></canvas>
     </div>
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'speed_test_download') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Network - Download Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_download"></canvas>
     </div>
