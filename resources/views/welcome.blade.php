@@ -111,7 +111,7 @@
         <h3 class="my-4 font-medium">Network - Download Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_download"></canvas>
     </div>
-    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto {{ request()->has('hide-important') ? 'hidden' :'' }}" id="test_information">
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto {{ request()->has('hide') ? 'hidden-important' :'' }}" id="test_information">
         <h3 class="mt-8 mb-2 pt-8">Informations about the monitoring</h3>
         <p class="mb-2">
             @if(env('APP_NAME') == 'de')
