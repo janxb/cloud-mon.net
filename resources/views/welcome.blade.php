@@ -158,7 +158,7 @@
             <p class="mb-2">Just write me a mail or open a issue on Github if you want a specific providere here.</p>
         </div>
     </div>
-    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow" id="api">
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow  {{ request()->has('hide') ? 'hidden' :'' }}" id="api">
         <h3 class="my-2">API</h3>
         <p class="mb-2">If you need our data in any way, we have a little json api for you. Since it is just a really
             basic
