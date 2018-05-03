@@ -15,9 +15,14 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
+    <style>
+        .hidden-important{
+            display:none !important;;
+        }
+    </style>
 </head>
 <body class="bg-grey-lighter font-sans leading-normal">
-<nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3 {{ request()->has('hide') ? 'hidden' :'' }}">
+<nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3 {{ request()->has('hide') ? 'hidden-important' :'' }}">
     <div class="flex items-center flex-no-shrink text-white mr-6">
         <img src="{{ asset('cloud_mon.png',true) }}" class="w-10">
         <span class="font-semibold text-xl tracking-tight">cloud-mon.net</span>
@@ -57,7 +62,7 @@
 </nav>
 <div class="container mx-auto">
     @if(\App\Models\Check::count() < 1001)
-        <div class="text-center w-auto my-4  {{ request()->has('hide') ? 'hidden' :'' }}">
+        <div class="text-center w-auto my-4  {{ request()->has('hide') ? 'hidden-important' :'' }}">
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
                 <strong class="font-bold">Warning!</strong>
@@ -65,7 +70,7 @@
             </div>
         </div>
     @endif
-    <div class="w-auto text-center max-w-md mx-auto px-4 my-8  {{ request()->has('hide') ? 'hidden' :'' }}">
+    <div class="w-auto text-center max-w-md mx-auto px-4 my-8  {{ request()->has('hide') ? 'hidden-important' :'' }}">
         <h3 class="my-4">Welcome on cloud-mon.net!</h3>
         <p>
             This is just a little monitoring for some cloud providers. We check every provider once a hour
@@ -106,7 +111,7 @@
         <h3 class="my-4 font-medium">Network - Download Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_download"></canvas>
     </div>
-    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto {{ request()->has('hide') ? 'hidden' :'' }}" id="test_information">
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto {{ request()->has('hide-important') ? 'hidden' :'' }}" id="test_information">
         <h3 class="mt-8 mb-2 pt-8">Informations about the monitoring</h3>
         <p class="mb-2">
             @if(env('APP_NAME') == 'de')
@@ -158,7 +163,7 @@
             <p class="mb-2">Just write me a mail or open a issue on Github if you want a specific providere here.</p>
         </div>
     </div>
-    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow  {{ request()->has('hide') ? 'hidden' :'' }}" id="api">
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow  {{ request()->has('hide') ? 'hidden-important' :'' }}" id="api">
         <h3 class="my-2">API</h3>
         <p class="mb-2">If you need our data in any way, we have a little json api for you. Since it is just a really
             basic
