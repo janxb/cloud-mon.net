@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Browsershot\Browsershot;
 use Spatie\Image\Manipulations;
 
@@ -39,8 +40,13 @@ class Tweet extends Command
      */
     public function handle()
     {
-        Browsershot::url('https://test.cloud-mon.net/?hide=speed_test_download')
-            ->fullPage()
-            ->save(storage_path(str_random().'.png'));
+        $path = storage_path(str_random().'.png');
+        Browsershot::url('https://test.cloud-mon.net/?hide=speed_test_download')->fullPage()->save($path);
+        Mail::raw('Next is there. ', function ($mail) use ($path) {
+            $mail->to('kontakt@lukas-kaemmerling.de');
+            $mail->attach($path);
+            $mail->subject('Image');
+        });
+        unlink($path);
     }
 }
