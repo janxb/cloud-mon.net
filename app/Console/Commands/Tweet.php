@@ -40,8 +40,7 @@ class Tweet extends Command
     public function handle()
     {
         Browsershot::url('https://test.cloud-mon.net/?hide=speed_test_download')
-            ->windowSize(1920, 1080)
-            ->fit(Manipulations::FIT_CONTAIN, 1920, 1080)
+            ->fullPage()
             ->save(storage_path(str_random().'.png'));
     }
 }
