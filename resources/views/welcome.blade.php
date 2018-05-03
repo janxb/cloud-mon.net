@@ -17,7 +17,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body class="bg-grey-lighter font-sans leading-normal">
-<nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3">
+<nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3 {{ request()->has('hide') ? 'hidden' :'' }}">
     <div class="flex items-center flex-no-shrink text-white mr-6">
         <img src="{{ asset('cloud_mon.png',true) }}" class="w-10">
         <span class="font-semibold text-xl tracking-tight">cloud-mon.net</span>
@@ -61,7 +61,7 @@
 </nav>
 <div class="container mx-auto">
     @if(\App\Models\Check::count() < 1001)
-        <div class="text-center w-auto my-4">
+        <div class="text-center w-auto my-4  {{ request()->has('hide') ? 'hidden' :'' }}">
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
                 <strong class="font-bold">Warning!</strong>
@@ -69,7 +69,7 @@
             </div>
         </div>
     @endif
-    <div class="w-auto text-center max-w-md mx-auto px-4 my-8">
+    <div class="w-auto text-center max-w-md mx-auto px-4 my-8  {{ request()->has('hide') ? 'hidden' :'' }}">
         <h3 class="my-4">Welcome on cloud-mon.net!</h3>
         <p>
             This is just a little monitoring for some cloud providers. We check every provider once a hour
@@ -110,7 +110,7 @@
         <h3 class="my-4 font-medium">Network - Download Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_download"></canvas>
     </div>
-    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto" id="test_information">
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto {{ request()->has('hide') ? 'hidden' :'' }}" id="test_information">
         <h3 class="mt-8 mb-2 pt-8">Informations about the monitoring</h3>
         <p class="mb-2">
             @if(env('APP_NAME') == 'de')
