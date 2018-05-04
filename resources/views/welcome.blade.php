@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>cloud-mon.net - just another cloud monitoring</title>
-    
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -15,15 +15,21 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
+    <style>
+        .hidden-important {
+            display: none !important;;
+        }
+    </style>
 </head>
 <body class="bg-grey-lighter font-sans leading-normal">
-<nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3">
+<nav class="flex items-center justify-between flex-wrap bg-blue p-6 mb-3 {{ request()->has('hide') ? 'hidden-important' :'' }}">
     <div class="flex items-center flex-no-shrink text-white mr-6">
         <img src="{{ asset('cloud_mon.png',true) }}" class="w-10">
         <span class="font-semibold text-xl tracking-tight">cloud-mon.net</span>
     </div>
     <div class="block lg:hidden">
-        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white" onclick="toggleNav()">
+        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white"
+                onclick="toggleNav()">
             <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>
                     Menu</title>
                 <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
@@ -57,7 +63,7 @@
 </nav>
 <div class="container mx-auto">
     @if(\App\Models\Check::count() < 1001)
-        <div class="text-center w-auto my-4">
+        <div class="text-center w-auto my-4  {{ request()->has('hide') ? 'hidden-important' :'' }}">
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
                 <strong class="font-bold">Warning!</strong>
@@ -65,14 +71,14 @@
             </div>
         </div>
     @endif
-    <div class="w-auto text-center max-w-md mx-auto px-4 my-8">
+    <div class="w-auto text-center max-w-md mx-auto px-4 my-8  {{ request()->has('hide') ? 'hidden-important' :'' }}">
         <h3 class="my-4">Welcome on cloud-mon.net!</h3>
         <p>
             This is just a little monitoring for some cloud providers. We check every provider once a hour
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
             the source available on <a class="text-blue hover:text-blue-dark"
                                        href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a>
-        
+
         </p>
         <p>Currently we have performed {{ \App\Models\Check::count() }} Checks in this location
             since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
@@ -80,7 +86,7 @@
             <a href="https://do.cloud-mon.net">New York</a>
             <a href="https://sing.cloud-mon.net">Singapore</a>
         </p>
-        
+
         @if(in_array(env('APP_NAME'),['sing','ny']))
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
@@ -89,24 +95,25 @@
             </div>
         @endif
     </div>
-    
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'api_response_time') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
     </div>
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'server_creation_time') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Time between api call and first successfully ping (in seconds last 24 hours)</h3>
         <canvas id="server_creation_time"></canvas>
     </div>
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'speed_test_upload') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Network - Upload Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_upload"></canvas>
     </div>
-    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow">
+    <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'speed_test_download') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Network - Download Speedtest (Mbit/s)</h3>
         <canvas id="speed_test_download"></canvas>
     </div>
-    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto" id="test_information">
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto {{ request()->has('hide') ? 'hidden-important' :'' }}"
+         id="test_information">
         <h3 class="mt-8 mb-2 pt-8">Informations about the monitoring</h3>
         <p class="mb-2">
             @if(env('APP_NAME') == 'de')
@@ -158,20 +165,25 @@
             <p class="mb-2">Just write me a mail or open a issue on Github if you want a specific providere here.</p>
         </div>
     </div>
-    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow" id="api">
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow  {{ request()->has('hide') ? 'hidden-important' :'' }}"
+         id="api">
         <h3 class="my-2">API</h3>
         <p class="mb-2">If you need our data in any way, we have a little json api for you. Since it is just a really
             basic
             api, currently we have only the link to the api:</p>
         <a href="/api" class="text-blue hover:text-blue-dark" target="_blank">Go to the API.</a>
     </div>
-    <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs">
+    <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs {{ request()->has('hide') ? '':'hidden-important' }}">
+        This page was generated on {{ date('Y-m-d H:i:s') }}.
+    </div>
+    <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs {{ request()->has('hide') ? 'hidden-important' :'' }}">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i
                     class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com"><img src="tailwind.svg"
                                                                                              class="fill-current h-4 w-4 mr-2"></a>
         in {{ date('Y') }} by <a class="text-blue hover:text-blue-dark"
                                  href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
-        <a href="https://lukas-kaemmerling.de/legal" target="_blank" class="text-blue hover:text-blue-dark">Impressum</a>
+        <a href="https://lukas-kaemmerling.de/legal" target="_blank"
+           class="text-blue hover:text-blue-dark">Impressum</a>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
