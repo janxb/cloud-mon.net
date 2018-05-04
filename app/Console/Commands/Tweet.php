@@ -44,21 +44,23 @@ class Tweet extends Command
      */
     public function handle()
     {
-        $path = storage_path(str_random() . '.png');
-        /*Browsershot::url(env('APP_URL') . '/?hide=speed_test_download')->waitUntilNetworkIdle()->setDelay(1000 * 10)->fullPage()->save($path);
-        Mail::raw('Next is there. ', function ($mail) use ($path) {
-            $mail->to('kontakt@lukas-kaemmerling.de');
-            $mail->attach($path);
-            $mail->subject('Image');
-        });*/
-        $providers = Provider::all()->map(function ($p) {
-            return '#'.str_slug($p->name);
-        });
-        echo $providers->implode(' ');
-        /*$uploaded_media = Twitter::uploadMedia(['media' => File::get($path)]);
+        $checks = ['server_creation_time' => "Server Creation Time", 'speed_test_upload' => "Upload Speedtest", 'speed_test_download' => "Download Speedtest"];
+        foreach ($checks as $check => $text) {
+            $path = storage_path(str_random() . '.png');
+            Browsershot::url(env('APP_URL') . '/?hide=' . $check)->waitUntilNetworkIdle()->setDelay(1000 * 10)->fullPage()->save($path);
+            Mail::raw('Next is there. ', function ($mail) use ($path) {
+                $mail->to('kontakt@lukas-kaemmerling.de');
+                $mail->attach($path);
+                $mail->subject('Image');
+            });
+            $providers = Provider::all()->map(function ($p) {
+                return '#' . str_slug($p->name);
+            });
+            $uploaded_media = Twitter::uploadMedia(['media' => File::get($path)]);
 
-         Twitter::postTweet(['status' => "Hi there! I've got a new daily result of my monitoring from ".env('APP_LOCATION')." for you! ", 'media_ids' => $uploaded_media->media_id_string]);
+            Twitter::postTweet(['status' => "Hi there! I've got a new daily result of my " . $text . " monitoring from " . env('APP_LOCATION') . " for you! ".$providers->implode(' ').' #cloud #monitoring', 'media_ids' => $uploaded_media->media_id_string]);
 
-        unlink($path);*/
+            unlink($path);
+        }
     }
 }
