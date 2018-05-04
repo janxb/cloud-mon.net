@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Provider;
-use Faker\Provider\File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use File;
 use Spatie\Browsershot\Browsershot;
 use Spatie\Image\Manipulations;
 use Thujohn\Twitter\Facades\Twitter;
