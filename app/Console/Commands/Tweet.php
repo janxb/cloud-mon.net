@@ -41,7 +41,7 @@ class Tweet extends Command
     public function handle()
     {
         $path = storage_path(str_random().'.png');
-        Browsershot::url(env('APP_URL').'/?hide=speed_test_download')->waitUntilNetworkIdle()->fullPage()->save($path);
+        Browsershot::url(env('APP_URL').'/?hide=speed_test_download')->waitUntilNetworkIdle()->setDelay(1000*10)->fullPage()->save($path);
         Mail::raw('Next is there. ', function ($mail) use ($path) {
             $mail->to('kontakt@lukas-kaemmerling.de');
             $mail->attach($path);
