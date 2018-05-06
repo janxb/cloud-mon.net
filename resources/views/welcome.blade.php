@@ -77,7 +77,8 @@
             This is just a little monitoring for some cloud providers. We check every provider once a hour
             and display the results here. Since a valid monitoring can only be trusted when the source code is open,
             the source available on <a class="text-blue hover:text-blue-dark"
-                                       href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a>
+                                       href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a> Follow us on
+            Twitter to get a daily summery about our results! Just follow <a href="https://twitter.com/CloudMonNet">@CloudMonNet</a>!
 
         </p>
         <p>Currently we have performed {{ \App\Models\Check::count() }} Checks in this location
@@ -176,6 +177,18 @@
     <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs {{ request()->has('hide') ? '':'hidden-important' }}">
         This page was generated on {{ date('Y-m-d H:i:s') }}.
     </div>
+    <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow  {{ request()->has('hide') ? 'hidden-important' :'' }}"
+         id="support">
+        <h3 class="my-2">Support us!</h3>
+        <p class="mb-2">Would you like to support the development and operation of <a href="https://cloud-mon.net">cloud-mon.net</a>?
+            We are an independent
+            cloud service monitoring and have only limited funds. All collected amounts are 100% invested in the
+            development, operation and the <a href="https://cloud-mon.net">cloud-mon.net</a> server created by the
+            provider.</p>
+        <a href="https://paypal.me/pools/c/84b4ZqL4bo" class="text-blue hover:text-blue-dark" target="_blank">Support
+            us!</a>
+    </div>
+
     <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs {{ request()->has('hide') ? 'hidden-important' :'' }}">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i
                     class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com"><img src="tailwind.svg"
