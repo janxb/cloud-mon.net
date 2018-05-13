@@ -116,7 +116,7 @@ class HetznerTarget extends AbstractTarget
             /**
              * @var $server \LKDev\HetznerCloud\Models\Servers\Server
              */
-            if ($server->name != 'cloud-mon.net') {
+            if ($server->name != 'cloud-mon.net' && $server->name != 'test.cloud-mon.net') {
                 $server->delete();
             }
         }
