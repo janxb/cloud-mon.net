@@ -69,7 +69,7 @@ abstract class AbstractTarget
                 echo $e->getMessage();
             }
             try {
-                if (! $ssh->login('root', $key)) {
+                if ( $ssh->login('root', $key) == false && $ssh->login('ubuntu', $key) == false) {
                     echo "Error on Login".PHP_EOL;
                     throw new \Exception("Can't login");
                 } else {
