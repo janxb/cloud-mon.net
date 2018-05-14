@@ -55,13 +55,12 @@ class HetznerTarget extends AbstractTarget
             $locations = new Locations();
             $location = $locations->get(1);
             $ssh_keys = new SSHKeys();
-
+            $start = microtime(true);
             $created_server = $server->create('mon-cloud-test-hetzner-'.env('APP_NAME').rand().'.mon-cloud.net', $serverType, $image, $location, null, [
                 18802,
                 33790,
             ]);
             $server_id = $created_server->id;
-            $start = microtime(true);
             $ping = new Ping($created_server->publicNet->ipv4->ip, 255, 5);
             $trys = 100;
             while ($ping->ping() == false && $trys != 0) {
