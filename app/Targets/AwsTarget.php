@@ -56,15 +56,15 @@ class AwsTarget extends AbstractTarget
                 'ImageId' => 'ami-a034194b',
                 'MinCount' => 1,
                 'MaxCount' => 1,
-                'InstanceType' => 't2.micro',
+                'InstanceType' => 't2.nano',
                 'KeyName' => 'server@cloud-mon.net',
                 'groupId' => ['sg-69042204'],
-                'AdditionalInfo' => 'mon-cloud-test-aws-' . env('APP_NAME') . rand() . '.mon-cloud.net',
+                'Name' => 'mon-cloud-test-aws-' . env('APP_NAME') . rand() . '.mon-cloud.net',
             ]);
 
             $server_id = $result->getPath('Instances/*/InstanceId');
-            
-            $dns = current($result->getPath('Reservations/*/Instances/*/PublicDnsName'));
+            $result = $this->ec2Client->describeInstances(['InstanceId' => $server_id]);
+            $dns = $result->get('PublicDnsName');
             $ip = gethostbyname($dns);
             $ping = new Ping($ip, 255, 5);
             $trys = 100;
@@ -80,6 +80,8 @@ class AwsTarget extends AbstractTarget
             $this->speedTest($ip, $server_id);
             $this->terminateAllServers();
         } catch (\Exception $e) {
+            $this->terminateAllServers();
+            echo $e->getMessage();
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
             Log::setup($this->provider, $check, $server_id, $e->getMessage());
         }
