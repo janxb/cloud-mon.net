@@ -80,7 +80,7 @@ class AwsTarget extends AbstractTarget
             $this->terminateAllServers();
         } catch (\Exception $e) {
             $this->terminateAllServers();
-            echo $e->getMessage();
+            echo $e;
             $check = $this->provider->checks()->create(['check' => 'server_creation_time', 'result' => 0]);
             Log::setup($this->provider, $check, $server_id, $e->getMessage());
         }
