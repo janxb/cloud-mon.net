@@ -45,7 +45,7 @@ class Tweet extends Command
     public function handle()
     {
         if (env('APP_LOCATION', false) != false) {
-            $checks = ['server_creation_time' => "server creation time", 'speed_test_upload' => "upload speedtest", 'speed_test_download' => "download speedtest"];
+            $checks = ['server_creation_time' => "server creation time", 'speed_test_upload' => "upload speedtest", 'speed_test_download' => "download speedtest", 'api_response_time' => 'api response time'];
             $media = [];
             foreach ($checks as $check => $text) {
                 $path = storage_path(str_random() . '.png');
