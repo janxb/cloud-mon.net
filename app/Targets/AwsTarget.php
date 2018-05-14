@@ -64,8 +64,7 @@ class AwsTarget extends AbstractTarget
 
             $server_id = $result->getPath('Instances/*/InstanceId');
             $result = $this->ec2Client->describeInstances(['InstanceId' => $server_id]);
-            $dns = $result->get('PublicDnsName');
-            $ip = gethostbyname($dns);
+            $ip = $result->get('ipAddress');
             $ping = new Ping($ip, 255, 5);
             $trys = 100;
             while ($ping->ping() == false && $trys != 0) {
