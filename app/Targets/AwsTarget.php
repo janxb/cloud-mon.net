@@ -61,10 +61,22 @@ class AwsTarget extends AbstractTarget
                 'groupId' => ['sg-69042204'],
                 'Name' => 'mon-cloud-test-aws-' . env('APP_NAME') . rand() . '.mon-cloud.net',
             ]);
+            $server_id = $result->search('Instances[0].InstanceId');
+            $ip = null;
+            while($ip == null){
+                $result = $this->ec2Client->describeInstances([
+                    "Filters" => [
+                        [
+                            "Name" => 'instance-id',
+                            'Values' => [$server_id]
+                        ],
+                    ]]);
+                var_dump($result);
+                $ip = $result->search('Reservations[0].Instances[0].PublicIpAddress');
+                var_dump($ip);
+                sleep(2);
 
-            $server_id = $result->getPath('Instances/*/InstanceId');
-            $result = $this->ec2Client->describeInstances(['InstanceId' => $server_id]);
-            $ip = $result->get('ipAddress');
+            }
             $ping = new Ping($ip, 255, 5);
             $trys = 100;
             while ($ping->ping() == false && $trys != 0) {
