@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>cloud-mon.net - just another cloud monitoring</title>
-    
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -79,7 +79,7 @@
             the source available on <a class="text-blue hover:text-blue-dark"
                                        href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a> Follow us on
             Twitter to get a daily summery about our results! Just follow <a href="https://twitter.com/CloudMonNet">@CloudMonNet</a>!
-        
+
         </p>
         <p>Currently we have performed {{ \App\Models\Check::count() }} Checks in this location
             since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
@@ -87,7 +87,7 @@
             <a href="https://do.cloud-mon.net">New York</a>
             <a href="https://sing.cloud-mon.net">Singapore</a>
         </p>
-        
+
         @if(in_array(env('APP_NAME'),['sing','ny']))
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
@@ -96,7 +96,7 @@
             </div>
         @endif
     </div>
-    
+
     <div class="w-auto h-100 text-center my-8 bg-white rounded-lg px-6 py-4 relative shadow {{ (request()->has('hide') && request('hide') != 'api_response_time') ? 'hidden-important' :'' }}">
         <h3 class="my-4 font-medium">Response time of the servers list endpoint</h3>
         <canvas id="api_response_time"></canvas>
@@ -188,7 +188,7 @@
         <a href="https://paypal.me/pools/c/84b4ZqL4bo" class="text-blue hover:text-blue-dark" target="_blank">Support
             us!</a>
     </div>
-    
+
     <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs {{ request()->has('hide') ? 'hidden-important' :'' }}">
         Crafted with <i class="fas fa-heart text-red"></i>, <a href="https://laravel.com" target="_blank"><i
                     class="fab fa-laravel"></i></a> & <a href="https://tailwindcss.com"><img src="tailwind.svg"
@@ -196,7 +196,9 @@
         in {{ date('Y') }} by <a class="text-blue hover:text-blue-dark"
                                  href="https://lukas-kaemmerling.de" target="_blank">Lukas Kämmerling</a>
         <a href="https://lukas-kaemmerling.de/legal" target="_blank"
-           class="text-blue hover:text-blue-dark">Impressum</a>
+           class="text-blue hover:text-blue-dark">Impressum</a><a href="https://lukas-kaemmerling.de/datenschutz"
+                                                                  target="_blank"
+                                                                  class="text-blue hover:text-blue-dark">Datenschutz</a>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
