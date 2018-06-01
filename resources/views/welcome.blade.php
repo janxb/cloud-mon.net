@@ -74,16 +74,16 @@
     <div class="w-auto text-center max-w-md mx-auto px-4 my-8  {{ request()->has('hide') ? 'hidden-important' :'' }}">
         <h3 class="my-4">Welcome on cloud-mon.net!</h3>
         <p>
-            This is just a little monitoring for some cloud providers. We check every provider once a hour
-            and display the results here. Since a valid monitoring can only be trusted when the source code is open,
-            the source available on <a class="text-blue hover:text-blue-dark"
+            This is just a little monitoring for some cloud providers. We check every provider once an hour
+            and display the results here. Since a valid monitoring can only be trusted when the code is open source,
+            you can find it on <a class="text-blue hover:text-blue-dark"
                                        href="https://github.com/LKDevelopment/cloud-mon.net">Github.</a> Follow us on
-            Twitter to get a daily summery about our results! Just follow <a href="https://twitter.com/CloudMonNet">@CloudMonNet</a>!
+            Twitter to get a daily summary about our results! Just follow <a href="https://twitter.com/CloudMonNet">@CloudMonNet</a>!
 
         </p>
-        <p>Currently we have performed {{ \App\Models\Check::count() }} Checks in this location
+        <p>Currently we have performed {{ \App\Models\Check::count() }} checks in this location
             since {{ \App\Models\Check::withoutGlobalScopes()->first()->created_at->format('d.m.Y h\:00 a') }}</p>
-        <p>Available Locations: <a href="https://cloud-mon.net">Germany</a>
+        <p>Available locations: <a href="https://cloud-mon.net">Germany</a>
             <a href="https://do.cloud-mon.net">New York</a>
             <a href="https://sing.cloud-mon.net">Singapore</a>
         </p>
@@ -92,7 +92,7 @@
             <div class="bg-orange-lightest border border-orange-light text-orange-dark mx-4 px-4 py-3 rounded relative shadow"
                  role="alert">
                 <strong class="font-bold">Warning!</strong>
-                <span class="block sm:inline">Because of the costs of the monitoring, the checks from Singapore and New York are limited to Hetzner and Digital Ocean!</span>
+                <span class="block sm:inline">Because of the costs of monitoring, the checks from Singapore and New York are limited to Hetzner and Digital Ocean!</span>
             </div>
         @endif
     </div>
@@ -136,8 +136,8 @@
         </p>
         <p class="mb-2">This test isn't associated with the tested Cloud Providers.</p>
         <h4 class="mt-4 mb-2">Instanced Definition</h4>
-        <p class="mb-2">We start all servers with the default ubuntu 16.04 image from the provider. Actually we
-            doesn't test the performance of the servers, so we used the cheapest available servers.</p>
+        <p class="mb-2">We start all servers with the default Ubuntu 16.04 image from the provider. Actually we
+            don't test the performance of the servers, so we just use the cheapest ones.</p>
         <p class="mb-2">We test only the performance of the api and the provision system.</p>
         <p class="mb-2">When there is no value for a time, this could be an error from the provider or the creation was
             running longer than an hour.</p>
@@ -163,15 +163,14 @@
         </div>
         <div class="text-center">
             <h3 class="mt-4 mb-2">Your provider isn't here?</h3>
-            <p class="mb-2">Just write me a mail or open a issue on Github if you want a specific providere here.</p>
+            <p class="mb-2">Just write me a mail or create an issue on Github if you want a specific provider here.</p>
         </div>
     </div>
     <div class="w-auto text-center my-8 text-sm max-w-md mx-auto rounded-lg px-6 py-4 bg-grey-lightest shadow  {{ request()->has('hide') ? 'hidden-important' :'' }}"
          id="api">
         <h3 class="my-2">API</h3>
-        <p class="mb-2">If you need our data in any way, we have a little json api for you. Since it is just a really
-            basic
-            api, currently we have only the link to the api:</p>
+        <p class="mb-2">If you need our data in any way, we have a little JSON API for you. Since it is just a really
+            basic interface, currently we have only the link to the API:</p>
         <a href="/api" class="text-blue hover:text-blue-dark" target="_blank">Go to the API.</a>
     </div>
     <div class="w-auto text-center p-3 mt-2 text-grey-dark mt-8 mb-4 text-xs {{ request()->has('hide') ? '':'hidden-important' }}">
